@@ -30,7 +30,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="./HistorialView.html">
                             <i class="bi bi-clock-fill"></i>
                             Historial
                         </a>
@@ -129,9 +129,16 @@
                             <option value="Otro">Otro</option>
                         </select>
                     </div>
+
+                    <div class="col-12">
+                        <label for="inputObservaciones" class="form-label">Observaciones/Detalles</label>
+                        <textarea class="form-control" id="inputObservaciones" rows="3"></textarea>
+                    </div>
                 </form>
 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                    <button class="btn btn-secondary" type="button">Limpiar</button>
+                    
                     <button class="btn btn-primary me-md-2" type="button" data-bs-toggle="modal" data-bs-target="#confirmacionModal">Reservar</button>
                     <div class="modal fade" id="confirmacionModal" tabindex="-1" role="dialog" aria-labelledby="confirmacionModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -150,8 +157,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <button class="btn btn-secondary" type="button">Limpiar</button>
                 </div>
             </section>
         </div>
