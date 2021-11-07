@@ -60,3 +60,8 @@ form {
     position: relative;
     margin: 20px 20px;
 }
+
+#background {
+    background: #F8F8F8;
+    height: 500px;
+}
