@@ -1,0 +1,16 @@
+#background {
+    background: #F8F8F8;
+    height: 500px;
+}
+
+.en-proceso {
+    min-height: 60px;
+    min-width: 100%;
+    background-color: green;
+}
+
+.pendiente {
+    min-height: 60px;
+    min-width: 100%;
+    background-color: #FFBA01;
+}
