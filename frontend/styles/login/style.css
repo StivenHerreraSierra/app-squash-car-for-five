@@ -1,7 +1,14 @@
 h1 {
   text-align: center;
-  margin-top: 40px;    
+  margin-top: 40px;
   margin-bottom: 40px;
+}
+
+input {
+  font-family: "Akrobat", sans-serif;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
 }
 
 form {
@@ -11,17 +18,11 @@ form {
   color: black;
   padding: 10px 10px;
   box-sizing: border-box;
-  margin-top: 1px;
-  box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.74);
-  border: 1px solid gray;
-  background: linear-gradient(to bottom, white, rgba(128, 128, 128, 0.322));
+  margin-top: 1px;  
   background-color: white;
 }
 
-input {
-    font-family: 'Akrobat', sans-serif;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    box-sizing: border-box;
+#background {
+  background: #f8f8f8;
+  height: 500px;
 }
-
