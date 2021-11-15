@@ -3,6 +3,7 @@ import './App.css';
 import { Container } from 'react-bootstrap';
 import Navegacion from './components/navegacion/Navegacion';
 import Header from './components/header/header';
+import InicioCliente from './components/cliente/InicioCliente';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -12,6 +13,8 @@ function App() {
      <Container>
      <Header/>
         <Navegacion/>
+
+        <InicioCliente />
      </Container>
     </div>
   );
