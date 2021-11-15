@@ -3,7 +3,7 @@ import './App.css';
 import { Container } from 'react-bootstrap';
 import Navegacion from './components/navegacion/Navegacion';
 import Header from './components/header/header';
-import HistorialCliente from './components/cliente/historial/HistorialCliente';
+import ReservasCliente from './components/cliente/reservas/ReservasCliente';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
      <Header/>
         <Navegacion/>
 
-        <HistorialCliente />
+        <ReservasCliente />
      </Container>
     </div>
   );
