@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import BarraCliente from "./BarraCliente";
+import BarraCliente from "../BarraCliente";
 import Carrusel from "./Carrusel";
 import PanelServicios from "./PanelServicios";
 
