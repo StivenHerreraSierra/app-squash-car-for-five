@@ -1,6 +1,6 @@
 import React from "react";
 import { Carousel } from "react-bootstrap";
-import ImagenOferta from "../../resources/images/ofertasBackground.jpg";
+import ImagenOferta from "../../../resources/images/ofertasBackground.jpg";
 
 export default class Carrusel extends React.Component {
   render() {

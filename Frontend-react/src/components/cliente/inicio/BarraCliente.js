@@ -1,5 +1,5 @@
 import React from "react";
-import "./BarraStyle.css"
+import "../inicioStyles.css"
 import { Nav, Container, Navbar,NavDropdown } from "react-bootstrap";
 import { ImUser } from "react-icons/im";
 import { BiExit  } from "react-icons/bi";
