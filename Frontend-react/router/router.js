@@ -13,7 +13,9 @@ import {
       return(
           <Router>
               <Switch>
-                  <Route exact path={["/", "/login"]} component={Navegacion}/>
+                  <Route exact path={["/",
+                  
+                  "/login"]} component={Navegacion}/>
               </Switch>
           </Router>
       ) 

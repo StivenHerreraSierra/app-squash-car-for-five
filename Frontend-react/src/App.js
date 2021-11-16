@@ -1,9 +1,20 @@
 
+import React from 'react';
+
+
+
+
+
+
 import './App.css';
 import { Container } from 'react-bootstrap';
 import Navegacion from './components/navegacion/Navegacion';
 import Header from './components/header/header';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+
 
 function App() {
   return (
@@ -11,7 +22,8 @@ function App() {
     <div className="App">
      <Container>
      <Header/>
-        <Navegacion/>
+     <Navegacion/>
+        
      </Container>
     </div>
   );
