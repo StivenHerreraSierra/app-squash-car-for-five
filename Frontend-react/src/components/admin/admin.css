@@ -1,4 +1,4 @@
-#admin-container .h1 {
+h1 {
     text-align: center;
     margin-top: 8%;
     margin-bottom: 30px;
@@ -24,3 +24,12 @@
     float: left;
   } 
   
+  #eliminar-empleado-card{    
+    width: 600px;
+    margin: auto;
+    margin-top: 5%;    
+  }
+
+  #eliminar-empleado-card .card-text{    
+    text-align: left;
+  }
