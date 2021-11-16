@@ -1,0 +1,30 @@
+h1 {
+  text-align: center;
+  margin-top: 10%;
+  margin-bottom: 30px;
+}
+
+h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  width: 600px;
+  margin: auto;
+  border-radius: 10px;
+  color: black;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  margin-top: 1px;
+  background-color: white;
+}
+
+#background {
+  background: #f8f8f8;
+  height: 500px;
+}
+
+#login-container .form-label {
+  float: left;
+}

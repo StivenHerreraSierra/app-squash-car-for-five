@@ -1,21 +1,26 @@
+import "./App.css";
+import { Container } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import './App.css';
-import { Container } from 'react-bootstrap';
-import Navegacion from './components/navegacion/Navegacion';
+import AppRouter from "./components/router/router";
+
+/*
 import Header from './components/header/header';
+import Navegacion from './components/navegacion/Navegacion';
 import HistorialCliente from './components/cliente/historial/HistorialCliente';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
-  return (
-    
-    <div className="App">
-     <Container>
-     <Header/>
+<Header/>
         <Navegacion/>
 
         <HistorialCliente />
-     </Container>
+*/
+
+function App() {
+  return (
+    <div className="App">
+      <Container>
+        <AppRouter />
+      </Container>
     </div>
   );
 }
