@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const ServicioSchema = new Schema({
-    id: Number,
-    idCliente: Number,
-    idVehiculo: Number,
+    id: String,
+    idCliente: String, //es el nro de documento.
+    idVehiculo: String, //es la placa.
     fecha: Date,
     estado: String,
     costo: Number,
