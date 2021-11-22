@@ -1,7 +1,6 @@
 const ClienteController = {};
 
 const Cliente = require('../models/Cliente.model');
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 ClienteController.crearCliente = async(req, res) => {
@@ -34,6 +33,15 @@ ClienteController.crearCliente = async(req, res) => {
         })
     }
 };
+
+ClienteController.obtener = async(req, res) => {
+    const documento = req.params.documento;
+
+    const documentoCliente = await Cliente.findOne({ numeroDocumento: documento });
+    if(!documentoCliente) return res.json({ mensaje: 'El número de documento no está registrado' });
+
+    res.json(documentoCliente);
+}
 
 ClienteController.login = async(req, res) => {
     const { nombre, cedula } = req.body;
