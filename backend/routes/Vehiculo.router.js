@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const VehiculoController = require('../controllers/Vehiculo.controller');;
+const VehiculoController = require('../controllers/Vehiculo.controller');
 
 router.post('/crear', VehiculoController.crearVehiculo);
 router.get('/listar/:idCliente', VehiculoController.listarPorCliente);
