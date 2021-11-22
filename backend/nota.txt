@@ -1,1 +1,0 @@
-Esta nota solo existe para que Git permita tomar el directorio al hacer add.
