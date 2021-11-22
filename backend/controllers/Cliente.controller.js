@@ -22,7 +22,6 @@ ClienteController.crearCliente = async(req, res) => {
             mensaje: 'El número de cédula ya existe'
         });
     } else {
-        NuevoCliente.numeroDocumento = await bcrypt.hash(numeroDocumento, 10);
         const token = jwt.sign({ _id: NuevoCliente._id }, "Secreta" );
 
         await NuevoCliente.save();
@@ -38,27 +37,19 @@ ClienteController.crearCliente = async(req, res) => {
 
 ClienteController.login = async(req, res) => {
     const { nombre, cedula } = req.body;
-    const cliente = await Cliente.findOne({ nombre: nombre });
+    const cliente = await Cliente.findOne({ nombre: nombre, cedula });
 
     if(!cliente) {
         return res.json({
-            mensaje: `El nombre '${nombre}' no se encuentra registrado en los clientes`
-        })
-    }
-
-    const match = await bcrypt.compare(cedula, cliente.numeroDocumento);
-
-    if(match) {
+            mensaje: `El nombre o cédula no se encuentra registrado en los clientes`
+        });
+    } else {
         const token = jwt.sign({ _id: cliente._id }, 'Secreta');
         res.json({
             mensaje: 'Bienvenido',
             id: cliente._id,
             nombre: cliente.nombre,
             token: token
-        });
-    } else {
-        res.json({
-            mensaje: 'El número de documento no está registrado en los clientes'
         });
     }
 }
