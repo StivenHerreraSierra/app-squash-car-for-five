@@ -2,19 +2,21 @@ import React from "react";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Navegacion from "../navegacion/Navegacion";
+import Empleados from "../Empleados/empleados";
 import Login from "../login/login";
 import HistorialCliente from "../cliente/historial/HistorialCliente";
 import AdminSite from "../admin/inicio";
 import CrearEmpleado from "../admin/crearEmpleado";
 import EliminarEmpleado from "../admin/eliminarEmpleado";
+import Pendientes from "../Empleados/pages/pendientes";
+import Procceso from "../Empleados/pages/procceso";
+import Realizados from "../Empleados/pages/realizados";
+
 
 export default function AppRouter() {
   return (
     <Router>
       <Switch>
-        <Route exact path={["/", "/login", "/empleados"]} component={Login} />
-        <Route exact path={["/navegacion"]} component={Navegacion} />
         <Route
           exact
           path={["/historialCliente"]}
@@ -22,7 +24,20 @@ export default function AppRouter() {
         />
         <Route exact path={["/admin"]} component={AdminSite} />
         <Route exact path={["/crear-empleado"]} component={CrearEmpleado} />
-        <Route exact path={["/eliminar-empleado"]} component={EliminarEmpleado} />
+        <Route
+          exact
+          path={["/eliminar-empleado"]}
+          component={EliminarEmpleado}
+        />
+        <Route exact path={["/", "/login"]} component={Login} />
+        <Route exact path={["/empleados"]} component={Empleados} />
+        <Route exact path={["/pendientes"]} component={Pendientes} />
+        <Route exact path={["/procceso"]} component={Procceso} />
+        <Route exact path={["/realizados"]} component={Realizados} />
+
+
+   
+
         <Route
           path={"*"}
           component={() => (
@@ -37,3 +52,5 @@ export default function AppRouter() {
     </Router>
   );
 }
+
+
