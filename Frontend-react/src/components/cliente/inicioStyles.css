@@ -1,0 +1,24 @@
+.nav-link {
+    display: flex;
+    flex-direction: row;
+}
+
+h2 {
+    text-align: left;
+}
+
+.en-proceso {
+    min-height: 60px;
+    min-width: 100%;
+    background-color: green;
+}
+
+.pendiente {
+    min-height: 60px;
+    min-width: 100%;
+    background-color: #FFBA01;
+}
+
+.cardService {
+    margin: 30px !important;
+}
