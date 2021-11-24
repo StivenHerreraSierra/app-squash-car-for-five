@@ -15,13 +15,12 @@ exports.create = function (req, res) {
     tipoDocumento: req.body.tipoDocumento,
     numeroDocumento: req.body.numeroDocumento,
     telefono: req.body.telefono,
-    pass: req.body.pass
-
+    pass: req.body.pass,
   });
 
   empleado.save(function (err) {
     if (err) {
-      console.log = false;
+      console.log(err);
       response.exito = false;
       response.msg = "Error al guardar el empleado";
       res.json(response);
@@ -62,12 +61,40 @@ exports.remove = function (req, res) {
   });
 };
 
+exports.update = function (req, res) {
+  let empleado = {
+    nombres: req.body.nombres,
+    apellidos: req.body.apellidos,
+    tipoDocumento: req.body.tipoDocumento,
+    numeroDocumento: req.body.numeroDocumento,
+    telefono: req.body.telefono,
+    pass: req.body.pass,
+  };
+  Empleado.findByIdAndUpdate(req.params.id, { $set: empleado }, function (err) {
+    if (err) {
+      console.log(err);
+      response.exito = false;
+      response.msg = "Error al actualizar el empleado";
+      res.json(response);
+      return;
+    }
+
+    response.exito = true;
+    response.msg = "El empleado ha sido actualizado";
+    res.json(response);
+  });
+};
 
 exports.login = function (req, res) {
   const numeroDocumentoEmpleado = req.body.numeroDocumento;
-  const empleado = Empleado.findOne({ numeroDocumento: numeroDocumentoEmpleado });  
+  const empleado = Empleado.findOne({
+    numeroDocumento: numeroDocumentoEmpleado,
+  });
 
-  const match = bcrypt.compare(numeroDocumentoEmpleado, empleado.numeroDocumento);
+  const match = bcrypt.compare(
+    numeroDocumentoEmpleado,
+    empleado.numeroDocumento
+  );
 
   if (match) {
     const token = jwt.sign({ _id: empleado._id }, "Secreta");
@@ -75,7 +102,7 @@ exports.login = function (req, res) {
       mensaje: "Bienvenido",
       id: empleado._id,
       nombres: empleado.nombres,
-      apellidos: empleado.apellidos, 
+      apellidos: empleado.apellidos,
       token: token,
     });
   } else {
