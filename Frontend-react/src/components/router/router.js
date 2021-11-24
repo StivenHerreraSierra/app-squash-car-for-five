@@ -8,6 +8,7 @@ import HistorialCliente from "../cliente/historial/HistorialCliente";
 import AdminSite from "../admin/inicio";
 import CrearEmpleado from "../admin/crearEmpleado";
 import EliminarEmpleado from "../admin/eliminarEmpleado";
+import Registro from "../registro/registro";
 
 export default function AppRouter() {
   return (
@@ -22,7 +23,12 @@ export default function AppRouter() {
         />
         <Route exact path={["/admin"]} component={AdminSite} />
         <Route exact path={["/crear-empleado"]} component={CrearEmpleado} />
-        <Route exact path={["/eliminar-empleado"]} component={EliminarEmpleado} />
+        <Route
+          exact
+          path={["/eliminar-empleado"]}
+          component={EliminarEmpleado}
+        />
+        <Route exact path={["/registro"]} component={Registro} />
         <Route
           path={"*"}
           component={() => (
