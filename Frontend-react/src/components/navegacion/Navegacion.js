@@ -1,34 +1,3 @@
-<<<<<<< HEAD
-import './navegacion.css'
-import React from 'react';
-import {Container, Nav} from 'react-bootstrap';
-
-export default class  navegacion extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {  }
-    }
-    render() { 
-        return (  
-            <Container id="container-navegacion">
-            <Nav justify variant="tabs" defaultActiveKey="/home">
-  <Nav.Item>
-    <Nav.Link href="/home">Pendientes</Nav.Link>
-  </Nav.Item>
-  <Nav.Item>
-    <Nav.Link eventKey="link-1">Procceso</Nav.Link>
-  </Nav.Item>
-  <Nav.Item>
-    <Nav.Link eventKey="link-2">Pendientes</Nav.Link>
-  </Nav.Item>
- 
-</Nav>
-
-</Container>
-
-        );
-    }
-=======
 import "./navegacion.css";
 import React from "react";
 import { Container, Nav } from "react-bootstrap";
@@ -77,7 +46,6 @@ export default class Navegacion extends React.Component {
       </Container>
     );
   }
->>>>>>> b802c067b1dc289369b09778fab5636e359e71dc
 }
  
 

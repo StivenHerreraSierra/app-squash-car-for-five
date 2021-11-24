@@ -34,7 +34,7 @@ export default function AppRouter() {
         <Route exact path={["/pendientes"]} component={Pendientes} />
         <Route exact path={["/procceso"]} component={Procceso} />
         <Route exact path={["/realizados"]} component={Realizados} />
-
+      
 
    
 
