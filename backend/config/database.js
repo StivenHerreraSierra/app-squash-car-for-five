@@ -4,18 +4,8 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 
 exports.mongoConnect = () => {
-  //
 
-  let mongoStringConnection = "";
-
-  if (process.env.DB_URI == undefined) {
-    const host = "localhost";
-    const port = "27017";
-    const db = "hr";
-    mongoStringConnection = `mongodb://${host}:${port}/${db}`;
-  } else {
-    mongoStringConnection = process.env.DB_URI;
-  }
+  const mongoStringConnection = `mongodb+srv://admin:admin@cluster0.1ymqe.mongodb.net/Suashcarforfive?retryWrites=true&w=majority`;
 
   mongoose
     .connect(mongoStringConnection)
