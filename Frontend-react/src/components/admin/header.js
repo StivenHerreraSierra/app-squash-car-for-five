@@ -1,8 +1,9 @@
 import React from "react";
 
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
-import { AiOutlineUserAdd, AiOutlineUserDelete } from "react-icons/ai";
-import { IoExitOutline } from "react-icons/io5";
+import { FaUserPlus, FaUserMinus, FaUserEdit } from "react-icons/fa";
+import { ImExit } from "react-icons/im";
+
 
 export default class Header extends React.Component {
   render() {
@@ -25,19 +26,25 @@ export default class Header extends React.Component {
               <Nav className="justify-content-end flex-grow-1 pe-3">
                 <Nav.Link href="/crear-empleado">
                   <span>
-                    <AiOutlineUserAdd />
+                    <FaUserPlus />
                     {"\t"}Crear empleado
+                  </span>
+                </Nav.Link>
+                <Nav.Link href="/editar-empleado">
+                  <span>
+                    <FaUserEdit />
+                    {"\t"}Editar empleado
                   </span>
                 </Nav.Link>
                 <Nav.Link href="/eliminar-empleado">
                   <span>
-                    <AiOutlineUserDelete />
+                    <FaUserMinus />
                     {"\t"}Eliminar empleado
                   </span>
                 </Nav.Link>
                 <Nav.Link href="/empleados">
                   <span>
-                    <IoExitOutline />
+                    <ImExit />
                     {"\t"}Cerrar sesion
                   </span>
                 </Nav.Link>
