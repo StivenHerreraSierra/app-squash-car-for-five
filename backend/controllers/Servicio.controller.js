@@ -5,14 +5,16 @@ const Vehiculo = require('../models/Vehiculo.model');
 const Servicio = require('../models/Servicio.model');
 
 ServicioController.crearServicio = async(req, res) => {
-    const { id, idCliente, idVehiculo, fecha, estado, costo, observaciones } = req.body;
+    const { id, idCliente, nombreCliente, idVehiculo, fecha, estado, tipo, costo, observaciones } = req.body;
 
     const NuevoServicio = new Servicio ({
         id,
         idCliente,
+        nombreCliente,
         idVehiculo,
         fecha,
         estado,
+        tipo,
         costo,
         observaciones
     });

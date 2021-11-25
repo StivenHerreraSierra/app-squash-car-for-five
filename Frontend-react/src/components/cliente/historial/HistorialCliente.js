@@ -4,7 +4,7 @@ import Barra from "../BarraCliente";
 import Buscador from "./buscador";
 import Tabla from "./tabla";
 import Pagination from "./paginacionTabla";
-import { Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 export default class HistorialCliente extends React.Component {
   render() {

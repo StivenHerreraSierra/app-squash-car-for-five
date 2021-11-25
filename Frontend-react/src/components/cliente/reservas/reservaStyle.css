@@ -1,11 +1,20 @@
 .container-formulario {
     width: 80%;
-    margin: 0 auto;
+    margin: 20px auto;
     border: 1px transparent;
     padding: 20px 15px;
     border-radius: 5px;
     -webkit-box-shadow: 0px 0px 9px -3px #000000; 
     box-shadow: 0px 0px 9px -3px #000000;
+}
+
+.formulario > form {
+    width: 95%;
+}
+
+.titulo {
+    margin-top: 0;
+    text-align: left;
 }
 
 .col {
