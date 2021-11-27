@@ -7,5 +7,6 @@ router.get("/", empleadoController.find);
 router.get("/:id", empleadoController.findOne);
 router.delete("/:id", empleadoController.remove);
 router.patch("/:id", empleadoController.update);
+router.post("/login", empleadoController.login);
 
 module.exports = router;

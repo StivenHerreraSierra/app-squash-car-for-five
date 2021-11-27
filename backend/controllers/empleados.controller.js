@@ -8,8 +8,8 @@ let response = {
   exito: false,
 };
 
-exports.create = function (req, res) {
-  let empleado = new Empleado({
+exports.create = async function (req, res) {
+  const empleado = new Empleado({
     nombres: req.body.nombres,
     apellidos: req.body.apellidos,
     tipoDocumento: req.body.tipoDocumento,
@@ -18,31 +18,41 @@ exports.create = function (req, res) {
     pass: req.body.pass,
   });
 
-  empleado.save(function (err) {
-    if (err) {
-      console.log(err);
-      response.exito = false;
-      response.msg = "Error al guardar el empleado";
+  const cedulaEmpleado = await Empleado.findOne({
+    numeroDocumento: req.body.numeroDocumento,
+  });
+
+  if (cedulaEmpleado) {
+    res.json({
+      mensaje: "El número de cédula ya existe",
+    });
+  } else {
+    empleado.pass = await bcrypt.hash(req.body.pass, 10);
+
+    empleado.save(function (err) {
+      if (err) {
+        console.log(err);
+        response.exito = false;
+        response.msg = "Error al guardar el empleado";
+        res.json(response);
+        return;
+      }
+
+      response.exito = true;
+      response.msg = "El empleado se guardó correctamente";
       res.json(response);
-      return;
-    }
-
-    response.exito = true;
-    response.msg = "El empleado se guardó correctamente";
-    res.json(response);
-  });
+    });
+  }
 };
 
-exports.find = function (req, res) {
-  Empleado.find(function (err, empleados) {
-    res.json(empleados);
-  });
+exports.find = async function (req, res) {
+  const empleados = await Empleado.find();
+  res.json(empleados);
 };
 
-exports.findOne = function (req, res) {
-  Empleado.findOne({ _id: req.params.id }, function (err, empleado) {
-    res.json(empleado);
-  });
+exports.findOne = async function (req, res) {
+  const empleado = await Empleado.findOne({ numeroDocumento: req.params.id });
+  res.json(empleado);
 };
 
 exports.remove = function (req, res) {
@@ -61,7 +71,7 @@ exports.remove = function (req, res) {
   });
 };
 
-exports.update = function (req, res) {
+exports.update = async function (req, res) {
   let empleado = {
     nombres: req.body.nombres,
     apellidos: req.body.apellidos,
@@ -70,6 +80,7 @@ exports.update = function (req, res) {
     telefono: req.body.telefono,
     pass: req.body.pass,
   };
+  empleado.pass = await bcrypt.hash(req.body.pass, 10);
   Empleado.findByIdAndUpdate(req.params.id, { $set: empleado }, function (err) {
     if (err) {
       console.log(err);
@@ -85,16 +96,21 @@ exports.update = function (req, res) {
   });
 };
 
-exports.login = function (req, res) {
-  const numeroDocumentoEmpleado = req.body.numeroDocumento;
-  const empleado = Empleado.findOne({
-    numeroDocumento: numeroDocumentoEmpleado,
+exports.login = async function (req, res) {
+  const numeroDocumento = req.body.numeroDocumento;
+  const pass = req.body.pass;
+
+  const empleado = await Empleado.findOne({
+    numeroDocumento: numeroDocumento,
   });
 
-  const match = bcrypt.compare(
-    numeroDocumentoEmpleado,
-    empleado.numeroDocumento
-  );
+  if (!empleado) {
+    return res.json({
+      mensaje: "Número de documento no registrado",
+    });
+  }
+
+  const match = await bcrypt.compare(pass, empleado.pass);
 
   if (match) {
     const token = jwt.sign({ _id: empleado._id }, "Secreta");
