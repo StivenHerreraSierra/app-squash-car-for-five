@@ -1,0 +1,12 @@
+#container-registro {
+  margin-top: 100px;
+}
+
+#background {
+  background: #f8f8f8;
+  height: 500px;
+}
+
+#container-registro .form-label {
+  float: left;
+}
