@@ -13,13 +13,30 @@ export default class HistorialCliente extends React.Component {
     this.state = {
       listaServicios: []
     }
+
+    this.obtenerListaServiciosFiltrada = this.obtenerListaServiciosFiltrada.bind(this);
   }
 
   componentDidMount() {
+    this.obtenerListaServicios();
+  }
+
+  obtenerListaServicios() {
     axios.get(`${host}/servicio/listar/cliente/09876`)
       .then(response => response.data)
       .then(response => this.setState({ listaServicios: response }))
       .catch(err => console.error(err.message));
+  }
+
+  obtenerListaServiciosFiltrada(placa) {
+    if(placa) {
+      axios.get(`${host}/servicio/listar/vehiculo/09876/${placa}`)
+        .then(response => response.data)
+        .then(response => this.setState({ listaServicios: response }))
+        .catch(err => console.error(err));
+    } else {
+      this.obtenerListaServicios();
+    }
   }
 
   render() {
@@ -33,7 +50,7 @@ export default class HistorialCliente extends React.Component {
 
         <div className="px-5">
           <div className="buscador">
-            <Buscador />
+            <Buscador onFiltrarTabla={ this.obtenerListaServiciosFiltrada }/>
           </div>
 
           <Tabla rows={ this.state.listaServicios } />
