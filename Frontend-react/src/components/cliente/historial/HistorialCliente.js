@@ -11,7 +11,8 @@ export default class HistorialCliente extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      listaServicios: []
+      listaServicios: [],
+      idCliente: sessionStorage.getItem('idCliente')
     }
 
     this.obtenerListaServiciosFiltrada = this.obtenerListaServiciosFiltrada.bind(this);
@@ -22,7 +23,7 @@ export default class HistorialCliente extends React.Component {
   }
 
   obtenerListaServicios() {
-    axios.get(`${host}/servicio/listar/cliente/09876`)
+    axios.get(`${host}/servicio/listar/cliente/${this.state.idCliente}`)
       .then(response => response.data)
       .then(response => this.setState({ listaServicios: response }))
       .catch(err => console.error(err.message));
@@ -30,7 +31,7 @@ export default class HistorialCliente extends React.Component {
 
   obtenerListaServiciosFiltrada(placa) {
     if(placa) {
-      axios.get(`${host}/servicio/listar/vehiculo/09876/${placa}`)
+      axios.get(`${host}/servicio/listar/vehiculo/${this.state.idCliente}/${placa}`)
         .then(response => response.data)
         .then(response => this.setState({ listaServicios: response }))
         .catch(err => console.error(err));

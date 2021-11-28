@@ -24,7 +24,7 @@ export default class Formulario extends React.Component {
             <Form.Group as={Col} className="mb-3" controlId="formGridTipoVehiculo">
               <Form.Label for="inputTipo">Tipo de vehículo</Form.Label>
               <select className="form-select" id="inputTipo">
-                <option selected value="Automóvil">
+                <option defaultValue value="Automóvil">
                   Automóvil
                 </option>
                 <option value="Bicicleta">Bicicleta</option>
@@ -41,7 +41,7 @@ export default class Formulario extends React.Component {
                 Tipo de lavado
               </label>
               <select className="form-select" id="inputTipo">
-                <option selected value="Convencional">Convencional</option>
+                <option defaultValue value="Convencional">Convencional</option>
                 <option value="Completo">Completo</option>
                 <option value="Ecologico">Ecológico</option>
               </select>

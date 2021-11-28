@@ -37,6 +37,8 @@ ServicioController.crearServicio = async(req, res) => {
 };
 
 ServicioController.listarPorCliente = async(req, res) => {
+    console.log(req.cookies)
+
     const idCliente = req.params.idCliente;
 
     const clienteServicio = await Cliente.findOne({ numeroDocumento: idCliente });
@@ -48,9 +50,10 @@ ServicioController.listarPorCliente = async(req, res) => {
 };
 
 ServicioController.listarPorPlaca = async(req, res) => {
+    const cliente = req.params.idCliente;
     const placa = req.params.placa;
 
-    const vehiculoServicio = await Vehiculo.findOne({ idVehiculo: placa });
+    const vehiculoServicio = await Vehiculo.findOne({ idCliente: cliente, idVehiculo: placa });
     if(!vehiculoServicio) return res.json({ mensaje: 'La placa no está registrada' });
 
     const servicios = await Servicio.find({ idVehiculo: placa });
