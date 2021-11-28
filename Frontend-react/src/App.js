@@ -1,12 +1,10 @@
-import './App.css';
+import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container } from 'react-bootstrap';
+import { Container } from "react-bootstrap";
 /*import Navegacion from './components/navegacion/Navegacion';
 import Header from './components/header/header';
 import HistorialCliente from './components/cliente/historial/HistorialCliente';*/
-import AppRouter from './components/router/router';
-
-
+import AppRouter from "./components/router/router";
 
 /*
 <Header/>
@@ -17,7 +15,6 @@ import AppRouter from './components/router/router';
 
 function App() {
   return (
-    
     <div className="App">
       <Container>
         <AppRouter />

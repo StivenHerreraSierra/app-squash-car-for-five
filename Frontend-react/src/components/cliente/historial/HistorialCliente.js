@@ -2,11 +2,26 @@ import React from "react";
 import "./historialStyles.css";
 import Barra from "../BarraCliente";
 import Buscador from "./buscador";
-import Tabla from "./tabla";
-import Pagination from "./paginacionTabla";
+import Tabla from "./tablaHistorial";
 import { Container } from "react-bootstrap";
+import axios from "axios";
+import { APIHOST as host } from '../../../app.json';
 
 export default class HistorialCliente extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      listaServicios: []
+    }
+  }
+
+  componentDidMount() {
+    axios.get(`${host}/servicio/listar/cliente/09876`)
+      .then(response => response.data)
+      .then(response => this.setState({ listaServicios: response }))
+      .catch(err => console.error(err.message));
+  }
+
   render() {
     return (
       <Container fluid>
@@ -21,11 +36,8 @@ export default class HistorialCliente extends React.Component {
             <Buscador />
           </div>
 
-          <Tabla />
+          <Tabla rows={ this.state.listaServicios } />
 
-          <div className="d-flex justify-content-center">
-            <Pagination className="mx-auto" />
-          </div>
         </div>
       </Container>
     );

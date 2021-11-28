@@ -14,9 +14,9 @@ export default class header extends React.Component {
 
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link class="nav-link" href="/homeCliente"><BsHouseDoorFill /> Inicio</Nav.Link>
-              <Nav.Link class="nav-link" href="/historialCliente"><BsFillClockFill /> Historial</Nav.Link>
-              <Nav.Link class="nav-link" href="/reservar"><BsCalendar2Fill /> Reserva</Nav.Link>
+              <Nav.Link className="nav-link" href="/homeCliente"><BsHouseDoorFill /> Inicio</Nav.Link>
+              <Nav.Link className="nav-link" href="/historialCliente"><BsFillClockFill /> Historial</Nav.Link>
+              <Nav.Link className="nav-link" href="/reservar"><BsCalendar2Fill /> Reserva</Nav.Link>
             </Nav>
             
             <Nav>

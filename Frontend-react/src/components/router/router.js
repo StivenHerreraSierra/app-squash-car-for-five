@@ -13,11 +13,15 @@ import EditarEmpleado from "../admin/editarEmpleado";
 import Pendientes from "../Empleados/pages/pendientes";
 import Procceso from "../Empleados/pages/procceso";
 import Realizados from "../Empleados/pages/realizados";
+import PrivateRoute from "../Auth/PrivateRoute";
+
 
 export default function AppRouter() {
   return (
     <Router>
       <Switch>
+      <Route exact path={["/", "/login", "/login-empleados"]} component={Login} />
+      {/*PrivateRoute para rutas que no deben ser accedidas si no estan con token */}
         <Route
           exact
           path={["/historialCliente"]}
@@ -25,10 +29,10 @@ export default function AppRouter() {
         />
         <Route exact path={["/reservar"]} component={ReservarCliente} />
         <Route exact path={["/admin"]} component={AdminSite} />
+        <PrivateRoute exact path={["/admin"]} component={AdminSite} />
         <Route exact path={["/crear-empleado"]} component={CrearEmpleado} />
         <Route exact path={["/eliminar-empleado"]} component={EliminarEmpleado} />
-        <Route exact path={["/editar-empleado"]} component={EditarEmpleado} />
-        <Route exact path={["/", "/login", "/login-empleados"]} component={Login} />
+        <Route exact path={["/editar-empleado"]} component={EditarEmpleado} />        
         <Route exact path={["/empleados"]} component={Empleados} />
         <Route exact path={["/pendientes"]} component={Pendientes} />
         <Route exact path={["/procceso"]} component={Procceso} />
@@ -37,7 +41,7 @@ export default function AppRouter() {
         <Route
           path={"*"}
           component={() => (
-            <h2 style={{ marginTop: 200 }}>
+            <h2 style={{ marginTop: 250 }}>
               404
               <br />
               PAGINA NO ENCONTRADA
