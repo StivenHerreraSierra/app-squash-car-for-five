@@ -13,6 +13,8 @@ import Pendientes from "../Empleados/pages/pendientes";
 import Procceso from "../Empleados/pages/procceso";
 import Realizados from "../Empleados/pages/realizados";
 
+import Registro from "../registro/registro";
+
 export default function AppRouter() {
   return (
     <Router>
@@ -40,6 +42,7 @@ export default function AppRouter() {
         <Route exact path={["/procceso"]} component={Procceso} />
         <Route exact path={["/realizados"]} component={Realizados} />
 
+        <Route exact path={["/registro"]} component={Registro} />
         <Route
           path={"*"}
           component={() => (
