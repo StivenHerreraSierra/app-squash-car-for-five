@@ -1,8 +1,6 @@
 import React from "react";
 import { Container, Row, Form, Button, Col } from "react-bootstrap";
-import { request } from "../helper/helper";
-import Header from "../login/header";
-import "./registro.css";
+import { request } from "../../helper/helper";
 
 export default class CrearCliente extends React.Component {
   constructor(props) {
@@ -41,10 +39,9 @@ export default class CrearCliente extends React.Component {
 
   render() {
     return (
-      <Container id="container-registro">
-        <Header />
+      <Container>
         <Row>
-          <h2>REGISTRO DE CLIENTES</h2>
+          <h2>Crear Cliente</h2>
         </Row>
         <Row>
           <Form>

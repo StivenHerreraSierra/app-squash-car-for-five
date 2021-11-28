@@ -4,7 +4,6 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 
 exports.mongoConnect = () => {
-
   const mongoStringConnection = `mongodb+srv://admin:admin@cluster0.1ymqe.mongodb.net/Suashcarforfive?retryWrites=true&w=majority`;
 
   mongoose

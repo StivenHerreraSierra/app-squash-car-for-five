@@ -25,7 +25,6 @@ app.use(cors());
 //Mongo coneection
 database.mongoConnect();
 
-
 //Router - publicas
 app.use("/empleados", empleadosRouter);
 app.use("/cliente", clienteRouter);
