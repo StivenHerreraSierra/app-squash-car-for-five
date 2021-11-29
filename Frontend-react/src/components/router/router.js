@@ -15,13 +15,19 @@ import Procceso from "../Empleados/pages/procceso";
 import Realizados from "../Empleados/pages/realizados";
 import PrivateRoute from "../Auth/PrivateRoute";
 
+import Registro from "../registro/registro";
+import Clientes from "../cliente/index";
 
 export default function AppRouter() {
   return (
     <Router>
       <Switch>
-      <Route exact path={["/", "/login", "/login-empleados"]} component={Login} />
-      {/*PrivateRoute para rutas que no deben ser accedidas si no estan con token */}
+        <Route
+          exact
+          path={["/", "/login", "/login-empleados"]}
+          component={Login}
+        />
+        {/*PrivateRoute para rutas que no deben ser accedidas si no estan con token */}
         <Route
           exact
           path={["/historialCliente"]}
@@ -31,13 +37,19 @@ export default function AppRouter() {
         <Route exact path={["/admin"]} component={AdminSite} />
         <PrivateRoute exact path={["/admin"]} component={AdminSite} />
         <Route exact path={["/crear-empleado"]} component={CrearEmpleado} />
-        <Route exact path={["/eliminar-empleado"]} component={EliminarEmpleado} />
-        <Route exact path={["/editar-empleado"]} component={EditarEmpleado} />        
+        <Route
+          exact
+          path={["/eliminar-empleado"]}
+          component={EliminarEmpleado}
+        />
+        <Route exact path={["/editar-empleado"]} component={EditarEmpleado} />
         <Route exact path={["/empleados"]} component={Empleados} />
         <Route exact path={["/pendientes"]} component={Pendientes} />
         <Route exact path={["/procceso"]} component={Procceso} />
         <Route exact path={["/realizados"]} component={Realizados} />
 
+        <Route exact path={["/registro"]} component={Registro} />
+        <Route exact path={["/clientes"]} component={Clientes} />
         <Route
           path={"*"}
           component={() => (
