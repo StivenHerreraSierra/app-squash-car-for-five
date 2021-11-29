@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Empleados from "../Empleados/empleados";
 import Login from "../login/login";
 import HistorialCliente from "../cliente/historial/HistorialCliente";
+import ReservarCliente from "../cliente/reservas/ReservasCliente";
 import AdminSite from "../admin/inicio";
 import CrearEmpleado from "../admin/crearEmpleado";
 import EliminarEmpleado from "../admin/eliminarEmpleado";
@@ -32,6 +33,8 @@ export default function AppRouter() {
           path={["/historialCliente"]}
           component={HistorialCliente}
         />
+        <Route exact path={["/reservar"]} component={ReservarCliente} />
+        <Route exact path={["/admin"]} component={AdminSite} />
         <PrivateRoute exact path={["/admin"]} component={AdminSite} />
         <Route exact path={["/crear-empleado"]} component={CrearEmpleado} />
         <Route

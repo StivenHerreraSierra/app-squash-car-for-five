@@ -4,35 +4,58 @@ const Cliente = require('../models/Cliente.model');
 const Vehiculo = require('../models/Vehiculo.model');
 const Servicio = require('../models/Servicio.model');
 
-ServicioController.crearServicio = async(req, res) => {
-    const { id, idCliente, idVehiculo, fecha, estado, costo, observaciones } = req.body;
+ServicioController.registrarServicio = async(servicio) => {
+    const { idCliente, nombreCliente, placa, fecha, estado, tipoLavado, costo, observaciones } = servicio;
+    const nuevoId = await Servicio.find({}).count() + 1;
 
     const NuevoServicio = new Servicio ({
-        id,
+        id: nuevoId,
         idCliente,
-        idVehiculo,
+        nombreCliente,
+        idVehiculo: placa,
         fecha,
         estado,
-        costo,
+        tipo: tipoLavado,
+        costo: 25000,
         observaciones
     });
 
-    const idServicio = await Servicio.findOne({ id: id });
-    if(idServicio) return res.json({ mensaje: 'Ya se ha registrado un servicio con ese ID' });
+    const respuesta = await NuevoServicio.save();
+
+    return respuesta;
+}
+
+ServicioController.crearServicio = async(req, res) => {
+    const { idCliente, nombreCliente } = req.body.cliente;
+    const { fecha, placa, tipoVehiculo, tipoLavado, observaciones } = req.body.servicio;
 
     const clienteServicio = await Cliente.findOne({ numeroDocumento: idCliente });
     if(!clienteServicio) return res.json({ mensaje: 'El número de documento no está registrado' });
 
-    const vehiculoServicio = await Vehiculo.findOne({ placa: idVehiculo });
-    if(!vehiculoServicio) return res.json({ mensaje: 'La placa del vehículo no está registrada' });
+    const vehiculo = {
+        idCliente, nombreCliente, placa, tipoVehiculo
+    };
 
-    const respuesta = await NuevoServicio.save();
+    const servicio = {
+        idCliente, nombreCliente, placa, fecha, estado: 'Pendiente', tipoLavado, observaciones
+    };
+
+    await ServicioController.validarVehiculo(vehiculo);
+    const respuesta = await ServicioController.registrarServicio(servicio);
 
     res.json({
         mensaje: 'Servicio registrado',
         respuesta
     });
 };
+
+ServicioController.validarVehiculo = async(vehiculo) => {
+    const vehiculoEncontrado = await Vehiculo.findOne({ placa: vehiculo.placa });
+
+    if(!vehiculoEncontrado) {
+        await Vehiculo.create(vehiculo);
+    }
+}
 
 ServicioController.listarPorCliente = async(req, res) => {
     const idCliente = req.params.idCliente;
@@ -46,9 +69,10 @@ ServicioController.listarPorCliente = async(req, res) => {
 };
 
 ServicioController.listarPorPlaca = async(req, res) => {
+    const cliente = req.params.idCliente;
     const placa = req.params.placa;
 
-    const vehiculoServicio = await Vehiculo.findOne({ idVehiculo: placa });
+    const vehiculoServicio = await Vehiculo.findOne({ idCliente: cliente, idVehiculo: placa });
     if(!vehiculoServicio) return res.json({ mensaje: 'La placa no está registrada' });
 
     const servicios = await Servicio.find({ idVehiculo: placa });
