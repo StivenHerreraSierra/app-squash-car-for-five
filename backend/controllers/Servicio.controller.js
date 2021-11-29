@@ -20,12 +20,10 @@ ServicioController.registrarServicio = async(servicio) => {
         observaciones
     });
 
-<<<<<<< HEAD
   
 
     const idServicio = await Servicio.findOne({ id: id });
     if(idServicio) return res.json({ mensaje: 'Ya se ha registrado un servicio con ese ID' });
-=======
     const respuesta = await NuevoServicio.save();
 
     return respuesta;
@@ -34,7 +32,6 @@ ServicioController.registrarServicio = async(servicio) => {
 ServicioController.crearServicio = async(req, res) => {
     const { idCliente, nombreCliente } = req.body.cliente;
     const { fecha, placa, tipoVehiculo, tipoLavado, observaciones } = req.body.servicio;
->>>>>>> 89b7b6453f28a2fb506690e3786bd4a371df7c43
 
     const clienteServicio = await Cliente.findOne({ numeroDocumento: idCliente });
     if(!clienteServicio) return res.json({ mensaje: 'El número de documento no está registrado' });
@@ -56,7 +53,6 @@ ServicioController.crearServicio = async(req, res) => {
     });
 };
 
-<<<<<<< HEAD
 ServicioController.listarTodosServicios = async(req, res) =>{
     const todosServicios =  await Servicio.find();
     if(todosServicios){
@@ -64,7 +60,6 @@ ServicioController.listarTodosServicios = async(req, res) =>{
     }
     
 };
-=======
 ServicioController.validarVehiculo = async(vehiculo) => {
     const vehiculoEncontrado = await Vehiculo.findOne({ placa: vehiculo.placa });
 
@@ -72,7 +67,6 @@ ServicioController.validarVehiculo = async(vehiculo) => {
         await Vehiculo.create(vehiculo);
     }
 }
->>>>>>> 89b7b6453f28a2fb506690e3786bd4a371df7c43
 
 ServicioController.listarPorCliente = async(req, res) => {
     const idCliente = req.params.idCliente;

@@ -4,12 +4,9 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var database = require("./config/database");
-<<<<<<< HEAD
 var cors = require('cors');
-=======
 var auth = require("./auth/main_auth");
 var cors = require("cors");
->>>>>>> 89b7b6453f28a2fb506690e3786bd4a371df7c43
 
 //importación rutas
 var empleadosRouter = require("./routes/empleados.router");
@@ -24,11 +21,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-<<<<<<< HEAD
 app.use(cors())
-=======
 app.use(cors());
->>>>>>> 89b7b6453f28a2fb506690e3786bd4a371df7c43
 
 //Mongo coneection
 database.mongoConnect();
