@@ -3,12 +3,49 @@ import Navempleados from "../navempleados";
 import Header from "../../admin/header";
 import { Container, Table, Button } from "react-bootstrap";
 import "./estilos-pendientes.css"
+import Axios from "axios"
+import axios from "axios";
 
-class pendientes extends React.Component {
+
+
+
+
+class pendientes extends React.Component {  
+
+
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      Servicios: [],
+      id: "",
+      idCliente: "",
+      nombreCliente: "",
+      idVehiculo: "",
+      fecha: "",
+      estado: "",
+      tipo: "",
+      costo: "",
+      observaciones: "", 
+     
+
+    };
   }
+
+  
+    componentDidMount(){
+    
+    axios.get('http://localhost:3001/servicio/listar')
+        .then(response => console.log(response.data));
+    
+    
+
+    }
+
+
+  
+
+
+
   render() {
     return (
       <Container>

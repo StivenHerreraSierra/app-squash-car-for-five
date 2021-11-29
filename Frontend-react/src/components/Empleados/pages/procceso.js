@@ -31,23 +31,12 @@ class procceso extends React.Component {
               <td>Mark</td>
               <td>Otto</td>
               <td>@mdo</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td >Larry the Bird</td>
-              <td >Larry the Bird</td>
-              <td>@twitter</td>
               <td>
               <Button variant="success"size="sm">Success</Button>{' '} 
               <Button variant="danger"size="sm">Warning</Button>{' '} 
               </td>
             </tr>
+            
           </tbody>
         </Table>
         </Container>

@@ -17,6 +17,8 @@ ServicioController.crearServicio = async(req, res) => {
         observaciones
     });
 
+  
+
     const idServicio = await Servicio.findOne({ id: id });
     if(idServicio) return res.json({ mensaje: 'Ya se ha registrado un servicio con ese ID' });
 
@@ -32,6 +34,14 @@ ServicioController.crearServicio = async(req, res) => {
         mensaje: 'Servicio registrado',
         respuesta
     });
+};
+
+ServicioController.listarTodosServicios = async(req, res) =>{
+    const todosServicios =  await Servicio.find();
+    if(todosServicios){
+         res.json(todosServicios);
+    }
+    
 };
 
 ServicioController.listarPorCliente = async(req, res) => {
