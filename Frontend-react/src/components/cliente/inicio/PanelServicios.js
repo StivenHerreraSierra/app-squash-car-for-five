@@ -6,7 +6,7 @@ export default class PanelServicios extends React.Component {
         return (
             <div>
                 <h2>Servicios activos</h2>
-                <hr class="w-25"/>
+                <hr className="w-25"/>
 
                 <div className="d-flex">
                     <CardServicio />

@@ -1,6 +1,6 @@
 import "./navegacion.css";
 import React from "react";
-import { Container, Nav } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import {
 
   Link,
@@ -8,6 +8,7 @@ import {
   Switch,
 
   Route,
+
   BrowserRouter,
   
 

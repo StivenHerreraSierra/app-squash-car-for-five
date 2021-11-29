@@ -4,13 +4,18 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var database = require("./config/database");
+<<<<<<< HEAD
 var cors = require('cors');
+=======
+var auth = require("./auth/main_auth");
+var cors = require("cors");
+>>>>>>> 89b7b6453f28a2fb506690e3786bd4a371df7c43
 
 //importación rutas
-var empleadosRouter = require('./routes/empleados.router');
-var clienteRouter = require('./routes/Cliente.router');
-var vehiculoRouter = require('./routes/Vehiculo.router');
-var servicioRouter = require('./routes/Servicio.router');
+var empleadosRouter = require("./routes/empleados.router");
+var clienteRouter = require("./routes/Cliente.router");
+var vehiculoRouter = require("./routes/Vehiculo.router");
+var servicioRouter = require("./routes/Servicio.router");
 
 var app = express();
 
@@ -19,17 +24,28 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+<<<<<<< HEAD
 app.use(cors())
+=======
+app.use(cors());
+>>>>>>> 89b7b6453f28a2fb506690e3786bd4a371df7c43
 
 //Mongo coneection
 database.mongoConnect();
 
-//Router
-app.use('/empleados', empleadosRouter);
-app.use('/cliente', clienteRouter);
-app.use('/vehiculo', vehiculoRouter);
-app.use('/servicio', servicioRouter);
+//Router - publicas
+app.use("/empleados", empleadosRouter);
+app.use("/cliente", clienteRouter);
 
+//De esta manera los clientes o empleados se pueden loguear sin requerir un token
+//app.use(auth);
+
+//Router - privadas
+app.use("/vehiculo", vehiculoRouter);
+app.use("/servicio", servicioRouter);
+
+//De esta manera se puede hacer peticiones a rutas privadas sin requerir un token
+app.use(auth);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
