@@ -1,14 +1,16 @@
 import "./navegacion.css";
 import React from "react";
-import { Container /*Nav*/ } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import {
-  /*Link,
-  Router,*/
-
+  Link,
+  Router,
+  Switch,
   Route,
   BrowserRouter,
-  Switch,
 } from "react-router-dom";
+
+
+
 import Header from "../admin/header";
 import Navegacion from "./navempleados";
 import Pendientes from "./pages/pendientes";
