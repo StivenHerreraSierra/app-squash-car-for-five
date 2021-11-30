@@ -40,10 +40,36 @@ export default class Login extends React.Component {
             path: "/",
             expires: calculaExtraccionSesion(),
           });
-          this.props.history.push("/admin")
-          
+          this.props.history.push("/admin");
         } else {
-          alert("Credenciales invalidas");
+          this.iniciarSesionCte();
+        }
+
+        this.setState({ loading: false });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  iniciarSesionCte() {
+    this.setState({ loading: true });
+    axios
+      .post(`${host}/cliente/login`, {
+        numeroDocumento: this.state.numeroDocumento,
+        pass: this.state.pass,
+      })
+      .then((response) => {
+        if (response.data.token) {
+          cookies.set("_s", response.data.token, {
+            path: "/",
+            expires: calculaExtraccionSesion(),
+          });
+          this.props.history.push("/clientes-inicio");
+        } else {
+          alert(
+            "Error de autenticación, verifique los datos e intente nuevamente"
+          );
         }
 
         this.setState({ loading: false });

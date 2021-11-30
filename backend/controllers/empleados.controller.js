@@ -123,7 +123,7 @@ exports.login = async function (req, res) {
     });
   } else {
     res.json({
-      mensaje: "Credenciales inválidas",
+      mensaje: "Credenciales inválidas para empleado",
     });
   }
 };

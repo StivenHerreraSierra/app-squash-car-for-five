@@ -41,7 +41,7 @@ export default class CrearCliente extends React.Component {
     return (
       <Container>
         <Row>
-          <h2>Crear Cliente</h2>
+          <h2>FORMULARIO PARA REGISTRAR CLIENTES</h2>
         </Row>
         <Row>
           <Form>
@@ -105,7 +105,7 @@ export default class CrearCliente extends React.Component {
               <Form.Group as={Col} controlId="formGridTel">
                 <Form.Label>Contraseña</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="password"
                   placeholder="Asigne una contraseña"
                   onChange={(e) => this.setValue("pass", e.target.value)}
                 />

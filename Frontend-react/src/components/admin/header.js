@@ -1,9 +1,13 @@
 import React from "react";
 
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
-import { FaUserPlus, FaUserMinus, FaUserEdit } from "react-icons/fa";
+import {
+  FaUserPlus,
+  FaUserMinus,
+  FaUserEdit,
+  FaUserCheck,
+} from "react-icons/fa";
 import { ImExit } from "react-icons/im";
-
 
 export default class Header extends React.Component {
   render() {
@@ -40,6 +44,12 @@ export default class Header extends React.Component {
                   <span>
                     <FaUserMinus />
                     {"\t"}Eliminar empleado
+                  </span>
+                </Nav.Link>
+                <Nav.Link href="/clientes">
+                  <span>
+                    <FaUserCheck />
+                    {"\t"}Gestion de Clientes
                   </span>
                 </Nav.Link>
                 <Nav.Link href="/empleados">

@@ -2,17 +2,11 @@ import "./navegacion.css";
 import React from "react";
 import { Container } from "react-bootstrap";
 import {
-
   Link,
   Router,
   Switch,
-
   Route,
-
   BrowserRouter,
-  
-
-
 } from "react-router-dom";
 
 
@@ -23,10 +17,6 @@ import Pendientes from "./pages/pendientes";
 import Procceso from "./pages/procceso";
 import Realizados from "./pages/realizados";
 
-
-
-
-
 class Empleados extends React.Component {
   constructor(props) {
     super(props);
@@ -36,21 +26,16 @@ class Empleados extends React.Component {
   render() {
     return (
       <Container>
-        
-      <Header/>
-     
-      <Navegacion/>
-      <BrowserRouter>
-        <Switch>
-           <Route exact path="/pendientes" component={Pendientes}></Route>
-        <Route path="/procceso" component={Procceso}></Route>
-        <Route path="/realizados" component={Realizados}></Route>
-             
-             </Switch> 
-          
-          
-          </BrowserRouter>
- 
+        <Header />
+
+        <Navegacion />
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/pendientes" component={Pendientes}></Route>
+            <Route path="/procceso" component={Procceso}></Route>
+            <Route path="/realizados" component={Realizados}></Route>
+          </Switch>
+        </BrowserRouter>
       </Container>
     );
   }
