@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "universal-cookie";
+import { APIHOST as host } from "../../app.json";
 
 const cookies = new Cookies();
 
@@ -23,11 +24,36 @@ function renovarSesion() {
     path: "/",
     expires: calculaExtraccionSesion(),
   });
+
+  return sesion;
 }
 
 export const request = {
-  get: function (url) {
-    renovarSesion();
-    return axios.get(url);
+  get: function (services) {
+    let token = renovarSesion();
+    return axios.get(`${host}${services}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+  },
+
+  getEmpleado: function (services, data) {
+    let token = renovarSesion();
+
+    return axios.post(`${host}${services}`, data, {
+      headers: {
+        Authorization: token,
+      },
+    });
+  },
+
+  post: function (services, data) {
+    let token = renovarSesion();
+    return axios.post(`${host}${services}`, data, {
+      headers: {
+        Authorization: token,
+      },
+    });
   },
 };

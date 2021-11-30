@@ -7,32 +7,44 @@ import "./login.css";
 import Cookies from "universal-cookie";
 import { calculaExtraccionSesion } from "../helper/helper";
 import Loading from "../Loading/Loading";
+import Alerta from "../Alerta/alertaAccion";
 
 const cookies = new Cookies();
 
 export default class Login extends React.Component {
   constructor(props) {
-    console.log();
     super(props);
-
     this.state = {
       loading: false,
-      numeroDocumento: "",
+      usuario: "",
       pass: "",
-      esUsuario: !props.location.pathname.includes("empleado"),
-      mensaje: props.location.pathname.includes("empleado")
-        ? "Empleados"
-        : "Usuarios registrados",
+      tipoDocumento: "CC",
+      mensajeErrorShow: false,
+      esCliente: true,
+      mensaje: "Usuarios registrados",
     };
+  }
+
+  componentDidMount() {
+    if (cookies.get("_s")) {
+      cookies.remove("_s");
+    }
+    if (window.location.pathname.includes("empleados")) {
+      this.setState({ esCliente: false, mensaje: "Empleados" });
+    }
   }
 
   iniciarSesion() {
     this.setState({ loading: true });
 
+    const ruta = this.state.esCliente ? "cliente" : "empleados";
+    let redireccion = this.state.esCliente ? "/home" : "/empleados-home";
+
     axios
-      .post(`${host}/empleados/login`, {
-        numeroDocumento: this.state.numeroDocumento,
+      .post(`${host}/${ruta}/login`, {
+        usuario: this.state.usuario,
         pass: this.state.pass,
+        tipoDocumento: this.state.tipoDocumento,
       })
       .then((response) => {
         if (response.data.token) {
@@ -40,13 +52,18 @@ export default class Login extends React.Component {
             path: "/",
             expires: calculaExtraccionSesion(),
           });
-          this.props.history.push("/admin")
-          
+
+          if (!this.state.esCliente && response.data.role === "Administrador") {
+            redireccion = "/admin";
+          }
+          this.props.history.push(redireccion);
         } else {
-          alert("Credenciales invalidas");
+          this.setState({
+            mensajeErrorShow: true,
+          });
         }
 
-        this.setState({ loading: false });
+        this.setState({ loading: false, mensajeErrorShow: false });
       })
       .catch((err) => {
         console.log(err);
@@ -63,17 +80,32 @@ export default class Login extends React.Component {
           <h3>{this.state.mensaje}</h3>
 
           <Form className="shadow p-3 mb-3 bg-body rounded p-4">
+            <Alerta
+              show={this.state.mensajeErrorShow}
+              text={"Credenciales incorrectas"}
+              tipoAlerta={1}
+            />
             <Form.Group className="mb-3" controlId="usuarioId">
               <Form.Label>Usuario</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese usuario"
-                onChange={(e) =>
-                  this.setState({ numeroDocumento: e.target.value })
-                }
+                onChange={(e) => this.setState({ usuario: e.target.value })}
               />
             </Form.Group>
-
+            <Form.Group className="mb-3" controlId="tipDocumentoEmpleado">
+              <Form.Label>Tipo de documento</Form.Label>
+              <Form.Select
+                onChange={(e) =>
+                  this.setState({ tipoDocumento: e.target.value })
+                }
+                className="mb-3"
+                aria-label="Tipo de documento"
+              >
+                <option value="CC">Cédula de ciudadanía</option>
+                <option value="CE">Cédula de entranjería</option>
+              </Form.Select>
+            </Form.Group>
             <Form.Group className="mb-3" controlId="password">
               <Form.Label>Contraseña</Form.Label>
               <Form.Control
@@ -93,7 +125,7 @@ export default class Login extends React.Component {
               Ingresar
             </Button>
           </Form>
-          {this.state.esUsuario && (
+          {this.state.esCliente && (
             <span>
               Usuario no registrado?
               <br />

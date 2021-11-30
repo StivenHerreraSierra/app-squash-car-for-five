@@ -1,11 +1,22 @@
 import React from "react";
-
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
+import { AiFillHome } from "react-icons/ai";
 import { FaUserPlus, FaUserMinus, FaUserEdit } from "react-icons/fa";
 import { ImExit } from "react-icons/im";
 
-
 export default class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      esHome: false,
+    };
+  }
+
+  componentDidMount() {
+    const esHome = window.location.pathname !== "/admin";
+    this.setState({ esHome: esHome });
+  }
+
   render() {
     return (
       <Navbar expand={false} bg="primary" variant="dark" fixed="top">
@@ -42,7 +53,15 @@ export default class Header extends React.Component {
                     {"\t"}Eliminar empleado
                   </span>
                 </Nav.Link>
-                <Nav.Link href="/empleados">
+                {this.state.esHome && (
+                  <Nav.Link href="/admin">
+                    <span>
+                      <AiFillHome />
+                      {"\t"}Volver a página inicial
+                    </span>
+                  </Nav.Link>
+                )}
+                <Nav.Link href="/login-empleados">
                   <span>
                     <ImExit />
                     {"\t"}Cerrar sesion
