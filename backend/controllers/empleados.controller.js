@@ -9,27 +9,30 @@ let response = {
 };
 
 exports.create = async function (req, res) {
-  const empleado = new Empleado({
-    nombres: req.body.nombres,
-    apellidos: req.body.apellidos,
+  const checkEmpleado = await Empleado.findOne({
+    numeroDocumento: req.body.numeroDocumento,
     tipoDocumento: req.body.tipoDocumento,
-    numeroDocumento: req.body.numeroDocumento,
-    telefono: req.body.telefono,
-    pass: req.body.pass,
   });
 
-  const cedulaEmpleado = await Empleado.findOne({
-    numeroDocumento: req.body.numeroDocumento,
-  });
-
-  if (cedulaEmpleado) {
+  if (checkEmpleado) {
     res.json({
-      mensaje: "El número de cédula ya existe",
+      msg: "El usuario ya se encuentra registrado",
     });
   } else {
+    const empleado = new Empleado({
+      nombres: req.body.nombres,
+      apellidos: req.body.apellidos,
+      tipoDocumento: req.body.tipoDocumento,
+      numeroDocumento: req.body.numeroDocumento,
+      usuario: req.body.usuario,
+      telefono: req.body.telefono,
+      pass: req.body.pass,
+      role: req.body.role,
+    });
+
     empleado.pass = await bcrypt.hash(req.body.pass, 10);
 
-    empleado.save(function (err) {
+    await empleado.save(function (err) {
       if (err) {
         console.log(err);
         response.exito = false;
@@ -46,12 +49,17 @@ exports.create = async function (req, res) {
 };
 
 exports.find = async function (req, res) {
-  const empleados = await Empleado.find();
+  const empleados = await Empleado.find({ role: "Empleado" });
   res.json(empleados);
 };
 
 exports.findOne = async function (req, res) {
-  const empleado = await Empleado.findOne({ numeroDocumento: req.params.id });
+  const infoEmpleado = {
+    numeroDocumento: req.params.id,
+    role: "Empleado",
+    tipoDocumento: req.body.tipoDocumento,
+  };
+  const empleado = await Empleado.findOne(infoEmpleado);
   res.json(empleado);
 };
 
@@ -72,15 +80,12 @@ exports.remove = function (req, res) {
 };
 
 exports.update = async function (req, res) {
-  let empleado = {
+  const empleado = {
     nombres: req.body.nombres,
     apellidos: req.body.apellidos,
-    tipoDocumento: req.body.tipoDocumento,
-    numeroDocumento: req.body.numeroDocumento,
     telefono: req.body.telefono,
-    pass: req.body.pass,
   };
-  empleado.pass = await bcrypt.hash(req.body.pass, 10);
+
   Empleado.findByIdAndUpdate(req.params.id, { $set: empleado }, function (err) {
     if (err) {
       console.log(err);
@@ -97,16 +102,18 @@ exports.update = async function (req, res) {
 };
 
 exports.login = async function (req, res) {
-  const numeroDocumento = req.body.numeroDocumento;
+  const usuario = req.body.usuario;
   const pass = req.body.pass;
+  const tipoDocumento = req.body.tipoDocumento;
 
   const empleado = await Empleado.findOne({
-    numeroDocumento: numeroDocumento,
+    usuario: usuario,
+    tipoDocumento: tipoDocumento,
   });
 
   if (!empleado) {
     return res.json({
-      mensaje: "Número de documento no registrado",
+      mensaje: "Usuario no registrado",
     });
   }
 
@@ -119,6 +126,7 @@ exports.login = async function (req, res) {
       id: empleado._id,
       nombres: empleado.nombres,
       apellidos: empleado.apellidos,
+      role: empleado.role,
       token: token,
     });
   } else {

@@ -6,8 +6,10 @@ const EmpleadosSchema = new Schema({
   apellidos: { type: String, required: true, max: 80 },
   tipoDocumento: { type: String, required: true, max: 5 },
   numeroDocumento: { type: String, required: true, max: 30 },
+  usuario: { type: String, required: true, max: 30 },
   telefono: { type: String, required: true, max: 30 },
-  pass: { type: String, required: true, max: 128 }
+  pass: { type: String, required: true, max: 128 },
+  role: { type: String, required: true, max: 30 },
 });
 
 module.exports = mongoose.model("empleados", EmpleadosSchema);
