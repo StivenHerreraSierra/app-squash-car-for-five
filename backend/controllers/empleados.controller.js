@@ -113,7 +113,7 @@ exports.login = async function (req, res) {
 
   if (!empleado) {
     return res.json({
-      mensaje: "Usuario no registrado",
+      mensaje: "Credenciales incorrectas",
     });
   }
 
@@ -131,7 +131,7 @@ exports.login = async function (req, res) {
     });
   } else {
     res.json({
-      mensaje: "Credenciales inválidas para empleado",
+      mensaje: "Credenciales incorrectas",
     });
   }
 };

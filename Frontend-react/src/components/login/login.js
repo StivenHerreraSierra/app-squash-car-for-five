@@ -20,6 +20,7 @@ export default class Login extends React.Component {
       pass: "",
       tipoDocumento: "CC",
       mensajeErrorShow: false,
+      mensajeError: "",
       esCliente: true,
       mensaje: "Usuarios registrados",
     };
@@ -35,7 +36,7 @@ export default class Login extends React.Component {
   }
 
   iniciarSesion() {
-    this.setState({ loading: true });    
+    this.setState({ loading: true });
 
     axios
       .post(`${host}/empleados/login`, {
@@ -51,10 +52,17 @@ export default class Login extends React.Component {
           });
           this.props.history.push("/admin");
         } else {
-          this.iniciarSesionCte();
+          this.setState({
+            mensajeErrorShow: true,
+            mensajeError: response.data.mensaje,
+          });
         }
 
-        this.setState({ loading: false });
+        this.setState({
+          loading: false,
+          mensajeErrorShow: false,
+          mensajeError: "",
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -65,8 +73,9 @@ export default class Login extends React.Component {
     this.setState({ loading: true });
     axios
       .post(`${host}/cliente/login`, {
-        numeroDocumento: this.state.numeroDocumento,
+        numeroDocumento: this.state.usuario,
         pass: this.state.pass,
+        tipoDocumento: this.state.tipoDocumento,
       })
       .then((response) => {
         if (response.data.token) {
@@ -76,9 +85,10 @@ export default class Login extends React.Component {
           });
           this.props.history.push("/clientes-inicio");
         } else {
-          alert(
-            "Error de autenticación, verifique los datos e intente nuevamente"
-          );
+          this.setState({
+            mensajeErrorShow: true,
+            mensajeError: response.data.mensaje,
+          });
         }
 
         this.setState({ loading: false, mensajeErrorShow: false });
@@ -100,7 +110,7 @@ export default class Login extends React.Component {
           <Form className="shadow p-3 mb-3 bg-body rounded p-4">
             <Alerta
               show={this.state.mensajeErrorShow}
-              text={"Credenciales incorrectas"}
+              text={this.state.mensajeError}
               tipoAlerta={1}
             />
             <Form.Group className="mb-3" controlId="usuarioId">
@@ -137,7 +147,11 @@ export default class Login extends React.Component {
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
-                this.iniciarSesion();
+                if (this.state.esCliente) {
+                  this.iniciarSesionCte();
+                } else {
+                  this.iniciarSesion();
+                }
               }}
             >
               Ingresar

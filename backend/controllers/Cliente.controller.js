@@ -59,9 +59,11 @@ ClienteController.find = async function (req, res) {
 ClienteController.login = async (req, res) => {
   const numeroDocumento = req.body.numeroDocumento;
   const pass = req.body.pass;
+  const tipoDocumento = req.body.tipoDocumento;  
 
   const cliente = await Cliente.findOne({
     numeroDocumento: numeroDocumento,
+    tipoDocumento: tipoDocumento,
   });
   /*  const { nombre, cedula } = req.body;
   const cliente = await Cliente.findOne({ nombre: nombre, cedula });
@@ -70,7 +72,7 @@ ClienteController.login = async (req, res) => {
     return res.json({
       mensaje: `El nombre o cédula no se encuentra registrado en los clientes`,
     });
-  }
+  }  
 
   if (pass === cliente.pass) {
     const token = jwt.sign({ _id: cliente._id }, "Secreta");
@@ -79,13 +81,11 @@ ClienteController.login = async (req, res) => {
       id: cliente._id,
       nombre: cliente.nombre,
       token: token,
-    });
-    console.log("aqui todo Ok");
+    });    
   } else {
     res.json({
       mensaje: "Credenciales inválidas para clientes",
-    });
-    console.log("aqui fallo pass");
+    });    
   }
 };
 
