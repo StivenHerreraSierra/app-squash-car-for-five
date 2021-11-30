@@ -6,6 +6,7 @@ import "./registro.css";
 
 export default class CrearCliente extends React.Component {
   constructor(props) {
+    console.log();
     super(props);
     this.state = {
       cliente: {
@@ -33,6 +34,7 @@ export default class CrearCliente extends React.Component {
       .post("/cliente", this.state.cliente)
       .then((response) => {
         console.log(response.data);
+        this.props.history.push("/");
       })
       .catch((err) => {
         console.error(err);
@@ -96,7 +98,7 @@ export default class CrearCliente extends React.Component {
               </Form.Group>
             </Row>
             <Row className="mb-3">
-              <Form.Group as={Col} controlId="formGridTel">
+              <Form.Group as={Col}>
                 <Form.Label>Teléfono</Form.Label>
                 <Form.Control
                   type="Number"
@@ -108,7 +110,7 @@ export default class CrearCliente extends React.Component {
               <Form.Group as={Col} controlId="formGridTel">
                 <Form.Label>Contraseña</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="password"
                   placeholder="Asigne una contraseña"
                   onChange={(e) => this.setValue("pass", e.target.value)}
                 />

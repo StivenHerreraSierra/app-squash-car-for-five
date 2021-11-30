@@ -2,6 +2,7 @@ const ClienteController = {};
 
 const Cliente = require("../models/Cliente.model");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 ClienteController.crearCliente = async (req, res) => {
   const { nombres, apellidos, tipoDocumento, numeroDocumento, telefono, pass } =
@@ -56,14 +57,22 @@ ClienteController.find = async function (req, res) {
 };
 
 ClienteController.login = async (req, res) => {
-  const { nombre, cedula } = req.body;
-  const cliente = await Cliente.findOne({ nombre: nombre, cedula });
+  const numeroDocumento = req.body.numeroDocumento;
+  const pass = req.body.pass;
 
+  const cliente = await Cliente.findOne({
+    numeroDocumento: numeroDocumento,
+  });
+  /*  const { nombre, cedula } = req.body;
+  const cliente = await Cliente.findOne({ nombre: nombre, cedula });
+*/
   if (!cliente) {
     return res.json({
       mensaje: `El nombre o cédula no se encuentra registrado en los clientes`,
     });
-  } else {
+  }
+
+  if (pass === cliente.pass) {
     const token = jwt.sign({ _id: cliente._id }, "Secreta");
     res.json({
       mensaje: "Bienvenido",
@@ -71,6 +80,12 @@ ClienteController.login = async (req, res) => {
       nombre: cliente.nombre,
       token: token,
     });
+    console.log("aqui todo Ok");
+  } else {
+    res.json({
+      mensaje: "Credenciales inválidas para clientes",
+    });
+    console.log("aqui fallo pass");
   }
 };
 
