@@ -94,10 +94,10 @@ ServicioController.listarPorPlaca = async(req, res) => {
 ServicioController.eliminar = async(req, res) => {
     const id = req.params.id;
 
-    const respuesta = await Servicio.deleteOne({ id: id });
+    const respuesta = await Servicio.deleteOne({ id : id });
 
     if(respuesta.deletedCount > 0) res.json({ mensaje: 'Servicio eliminado' });
-    else res.json({ mensaje: 'No se encontró el servicio' });
+    else res.json({ mensaje: 'No se encontró el servicio ' });
 };
 
 ServicioController.actualizar = async(req, res) => {

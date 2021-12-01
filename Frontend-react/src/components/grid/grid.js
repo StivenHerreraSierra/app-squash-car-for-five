@@ -1,6 +1,6 @@
 import React from "react";
 import { request } from "../helper/helper";
-import BootstrapTable from "react-bootstrap-table-next";
+import {BootstrapTable} from "react-bootstrap-table-next";
 
 export default class DataGrid extends React.Component {
   constructor(props) {

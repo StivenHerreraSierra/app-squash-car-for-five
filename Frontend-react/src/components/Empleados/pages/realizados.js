@@ -2,11 +2,60 @@ import React from "react";
 import Header from "../../admin/header";
 import Navempleados from "../navempleados"
 import {Container,Table,Button,} from "react-bootstrap"
+import axios from "axios";
+
 class realizados extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      Servicios:[],
+      id: "",
+      idCliente: "",
+      nombreCliente: "",
+      idVehiculo: "",
+      fecha: "",
+      estado: "",
+      tipo: "",
+      costo: "",
+      observaciones: "", 
+
+
+    };
   }
+
+
+  componentDidMount(){
+    this.obtenerServiciosRealizados();
+
+
+  }
+
+  obtenerServiciosRealizados(){
+
+    axios.get('http://localhost:3001/servicio/listar')
+    .then(Response =>{
+
+      const servicios =  Response.data;
+      this.setState({Servicios : servicios});
+      this.filtrarServiciosRealizados(servicios);
+    })
+
+
+
+  }
+
+  filtrarServiciosRealizados(servicios){
+
+    const serviciosRealizados =  servicios.filter(servicios => {return servicios.estado === 'Realizado'});
+    this.setState({Servicios: serviciosRealizados});
+
+
+
+
+  }
+
+
+
   render() {
     return (
       <Container>
@@ -26,28 +75,18 @@ class realizados extends React.Component {
             </tr>
           </thead>
           <tbody>
+            {this.state.Servicios.map( servicio =>
             <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td >Larry the Bird</td>
-              <td >Larry the Bird</td>
-              <td>@twitter</td>
+              <td>{servicio.idVehiculo}</td>
+              <td >{servicio.nombreCliente}</td>
+              <td >{servicio.tipo}</td>
+              <td>{servicio.costo}</td>
               <td>
               <Button variant="info"size="sm">Success</Button>{' '} 
       
               </td>
             </tr>
+            )}
           </tbody>
         </Table>
         </Container>
