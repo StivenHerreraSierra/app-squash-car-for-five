@@ -1,24 +1,29 @@
 .nav-link {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 h2 {
-    text-align: left;
+  text-align: left;
 }
 
 .en-proceso {
-    min-height: 60px;
-    min-width: 100%;
-    background-color: green;
+  min-height: 60px;
+  min-width: 100%;
+  background-color: green;
 }
 
 .pendiente {
-    min-height: 60px;
-    min-width: 100%;
-    background-color: #FFBA01;
+  min-height: 60px;
+  min-width: 100%;
+  background-color: #ffba01;
 }
 
 .cardService {
-    margin: 30px !important;
+  margin: 30px !important;
+}
+
+/*agregado por Victor para el index*/
+#clientes-container {
+  margin-top: 100px;
 }

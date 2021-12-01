@@ -37,7 +37,7 @@ export default class BuscarCliente extends React.Component {
     return (
       <Container id="clientes-buscar-container">
         <Row>
-          <h2> INFORMACION DE CLIENTES </h2>
+          <h2> CLIENTES REGISTRADOS </h2>
         </Row>
         <Row>
           <DataGrid url="/cliente" columns={columns} />

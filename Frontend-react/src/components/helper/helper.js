@@ -24,6 +24,8 @@ function renovarSesion() {
     path: "/",
     expires: calculaExtraccionSesion(),
   });
+
+  return sesion;
 }
 
 export const request = {
@@ -31,7 +33,17 @@ export const request = {
     let token = renovarSesion();
     return axios.get(`${host}${services}`, {
       headers: {
-        Authorization: `Bearer${token}`,
+        Authorization: token,
+      },
+    });
+  },
+
+  getEmpleado: function (services, data) {
+    let token = renovarSesion();
+
+    return axios.post(`${host}${services}`, data, {
+      headers: {
+        Authorization: token,
       },
     });
   },
@@ -40,7 +52,7 @@ export const request = {
     let token = renovarSesion();
     return axios.post(`${host}${services}`, data, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: token,
       },
     });
   },

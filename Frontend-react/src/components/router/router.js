@@ -24,6 +24,8 @@ import PrivateRoute from "../Auth/PrivateRoute";
 import Registro from "../registro/registro";
 import Clientes from "../cliente/index";
 import pendientes from "../Empleados/pages/pendientes";
+import InicioClientes from "../cliente/inicio/InicioCliente";
+import IndexClientes from "../cliente/index";
 
 export default function AppRouter() {
   return (
@@ -57,6 +59,8 @@ export default function AppRouter() {
 
         <Route exact path={["/registro"]} component={Registro} />
         <Route exact path={["/clientes"]} component={Clientes} />
+        <Route exact path={["/clientes-inicio"]} component={InicioClientes} />
+        <Route exact path={["/clientes-index"]} component={IndexClientes} />
         <Route
           path={"*"}
           component={() => (

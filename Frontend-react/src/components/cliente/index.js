@@ -2,7 +2,8 @@ import React from "react";
 import { Container, Row, Nav } from "react-bootstrap";
 import BuscarCliente from "./crud/buscar";
 import CrearCliente from "./crud/crear";
-//import "./empleados.css";
+import HeaderAdmin from "../admin/header";
+import "./inicioStyles.css";
 
 export default class Clientes extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ export default class Clientes extends React.Component {
   render() {
     return (
       <Container id="clientes-container">
+        <HeaderAdmin />
         <Row>
           <Nav
             fill
@@ -22,10 +24,14 @@ export default class Clientes extends React.Component {
             onSelect={(eventKey) => this.setState({ currentTab: eventKey })}
           >
             <Nav.Item>
-              <Nav.Link eventKey="buscar">Buscar</Nav.Link>
+              <Nav.Link eventKey="buscar">
+                Tabla de Clientes Registrados
+              </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="crear">Crear</Nav.Link>
+              <Nav.Link eventKey="crear">
+                Formulario para Registro de Clientes Nuevos
+              </Nav.Link>
             </Nav.Item>
           </Nav>
         </Row>

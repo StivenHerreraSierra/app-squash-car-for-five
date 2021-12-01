@@ -1,0 +1,8 @@
+.react-bs-table-sizePerPage-dropdown .dropdown-toggle {
+  float: left;
+  margin-bottom: 20px;
+}
+
+.react-bootstrap-table table {
+  table-layout: auto;
+}
