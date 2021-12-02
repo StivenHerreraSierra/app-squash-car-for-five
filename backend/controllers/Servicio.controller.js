@@ -23,14 +23,14 @@ ServicioController.registrarServicio = async(servicio) => {
 
   
 
-    const idServicio = await Servicio.findOne({ id: id });
+    const idServicio = await Servicio.findOne({ id: nuevoId });
     if(idServicio) return res.json({ mensaje: 'Ya se ha registrado un servicio con ese ID' });
     const respuesta = await NuevoServicio.save();
 
     return respuesta;
 }
 
-ServicioController.crearServicio = async(req, res) => {
+ServicioController.crearServicio = async(req, res) => {    
     const { idCliente, nombreCliente } = req.body.cliente;
     const { fecha, placa, tipoVehiculo, tipoLavado, observaciones } = req.body.servicio;
 
