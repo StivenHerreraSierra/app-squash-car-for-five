@@ -3,6 +3,11 @@ import { Container, Row, Form, Button, Col } from "react-bootstrap";
 import { request } from "../helper/helper";
 import Header from "../login/header";
 import "./registro.css";
+import { calculaExtraccionSesion } from "../helper/helper";
+import Cookies from "universal-cookie";
+import Alerta from "../Alerta/alertaAccion";
+
+const cookies = new Cookies();
 
 export default class CrearCliente extends React.Component {
   constructor(props) {
@@ -12,10 +17,15 @@ export default class CrearCliente extends React.Component {
       cliente: {
         nombres: "",
         apellidos: "",
-        tipoDocumento: "",
+        tipoDocumento: "CC",
         numeroDocumento: 0,
         telefono: 0,
         pass: "",
+      },
+      alerta: {
+        show: false,
+        mensaje: "",
+        tipoAlerta: 0,
       },
     };
   }
@@ -31,14 +41,47 @@ export default class CrearCliente extends React.Component {
 
   guardarCliente() {
     request
-      .post("/cliente", this.state.cliente)
+      .crearCliente("/cliente", this.state.cliente)
       .then((response) => {
-        console.log(response.data);
-        this.props.history.push("/");
+        if (response.data.token) {
+          cookies.set("_s", response.data.token, {
+            path: "/",
+            expires: calculaExtraccionSesion(),
+          });
+
+          sessionStorage.setItem("clienteId", response.data.id);
+          sessionStorage.setItem(
+            "clienteNumeroDocumento",
+            response.data.numeroDocumento
+          );
+          sessionStorage.setItem("clienteNombre", response.data.nombres);
+
+          this.establecerAlerta(response.data.mensaje);
+
+          setTimeout(() => {
+            this.props.history.push("/historialCliente");
+          }, 800);
+        } else {
+          this.establecerAlerta(response.data.mensaje, 1);
+        }
       })
       .catch((err) => {
         console.error(err);
       });
+  }
+
+  establecerAlerta(mensaje, tipoAlerta = 0) {
+    this.setState({
+      alerta: {
+        show: true,
+        mensaje: mensaje,
+        tipoAlerta: tipoAlerta,
+      },
+    });
+
+    setTimeout(() => {
+      this.setState({ alerta: { show: false } });
+    }, 1200);
   }
 
   render() {
@@ -50,6 +93,11 @@ export default class CrearCliente extends React.Component {
         </Row>
         <Row>
           <Form>
+            <Alerta
+              show={this.state.alerta.show}
+              text={this.state.alerta.mensaje}
+              tipoAlerta={this.state.alerta.tipoAlerta}
+            />
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridName">
                 <Form.Label>Nombre(s)</Form.Label>
@@ -79,10 +127,8 @@ export default class CrearCliente extends React.Component {
                     this.setValue("tipoDocumento", e.target.value)
                   }
                 >
-                  <option>Seleccione su tipo de documento</option>
                   <option value="CC">Cédula de Ciudadanía</option>
-                  <option value="CE">Cédula de Extrangería</option>
-                  <option value="PTE">Pasaporte</option>
+                  <option value="CE">Cédula de Extranjería</option>
                 </Form.Select>
               </Form.Group>
 
@@ -91,9 +137,10 @@ export default class CrearCliente extends React.Component {
                 <Form.Control
                   type="Number"
                   placeholder="Ejemplo: 123456789"
-                  onChange={(e) =>
-                    this.setValue("numeroDocumento", e.target.value)
-                  }
+                  onChange={(e) => {
+                    //                    const numeroDocumento =
+                    this.setValue("numeroDocumento", e.target.value);
+                  }}
                 />
               </Form.Group>
             </Row>
@@ -119,7 +166,10 @@ export default class CrearCliente extends React.Component {
             <Button
               variant="primary"
               type="submit"
-              onClick={() => console.log(this.guardarCliente())}
+              onClick={(e) => {
+                e.preventDefault();
+                this.guardarCliente();
+              }}
             >
               GUARDAR
             </Button>

@@ -18,10 +18,10 @@ export default class EditarEmpleado extends React.Component {
     return (
       <Container>
         <Loading show={this.state.loading} />
-        <Header />
+        <Header Editar={true} />
         <Container id="admin-container">
-          <h1 id="admin-h1">Edición empleados</h1>
-          <BuscarEmpleado searchMode={false} action={"Actualizar"}/>
+          <h1 id="admin-h1">Editar empleado</h1>
+          <BuscarEmpleado editMode={true} action={"Actualizar"} />
         </Container>
       </Container>
     );

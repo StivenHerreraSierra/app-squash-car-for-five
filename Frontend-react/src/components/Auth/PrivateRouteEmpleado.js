@@ -6,30 +6,18 @@ const checkAuth = () => {
   return !getSession() ? false : true;
 };
 
-export default class PrivateRoute extends React.Component {
+export default class PrivateRouteEmpleado extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       auth: false,
       role: sessionStorage.getItem("role"),
-      redirect: "",
     };
   }
 
   componentWillMount() {
-    let redirect = "";
-    let esCliente = true;
-
-    if (this.state.role) {
-      esCliente = false;
-      redirect = this.state.role === "Administrador" ? "/admin" : "/empleados";
-    } else {
-      redirect = "/login";
-    }
-
     this.setState({
-      redirect: redirect,
-      auth: checkAuth() && !this.state.auth && esCliente,
+      auth: checkAuth() && !this.state.auth && this.state.role,
     });
   }
 
@@ -44,7 +32,7 @@ export default class PrivateRoute extends React.Component {
           ) : (
             <Redirect
               to={{
-                pathname: this.state.redirect,
+                pathname: "/historialCliente",
                 state: { from: this.props.location },
               }}
             />

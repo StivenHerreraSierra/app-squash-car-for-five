@@ -7,32 +7,28 @@ import DataGrid from "./grid/grid";
 
 const columns = [
   {
-    dataField: "_id",
-    text: "Id en base de datos",
+    dataField: "id",
+    text: "Id del servicio",
   },
   {
-    dataField: "nombres",
-    text: "Nombres",
+    dataField: "nombreCliente",
+    text: "Nombre cliente",
   },
   {
-    dataField: "apellidos",
-    text: "Apellidos",
+    dataField: "idVehiculo",
+    text: "Placa del vehículo",
   },
   {
-    dataField: "tipoDocumento",
-    text: "Tipo de documento",
+    dataField: "estado",
+    text: "Estado",
   },
   {
-    dataField: "numeroDocumento",
-    text: "Número de documento",
-  },
-  {
-    dataField: "telefono",
-    text: "Teléfono",
+    dataField: "observaciones",
+    text: "Empleado asignado",
   },
 ];
 
-export default class AdminSite extends React.Component {
+export default class AdminSiteServicios extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -41,13 +37,13 @@ export default class AdminSite extends React.Component {
   render() {
     return (
       <Container>
-        <Header Home={true} />
+        <Header Servicios={true} />
         <h1 id="admin-h1">Menú administración</h1>
-        <h3 id="admin-h3">Empleados registrados</h3>
+        <h3 id="admin-h3">Historico servicios</h3>
         <DataGrid
-          url="/empleados"
+          url="/servicio/listar"
           columns={columns}
-          mostrarInputBusqueda={true}
+          mostrarInputBusqueda={false}
         />
       </Container>
     );
