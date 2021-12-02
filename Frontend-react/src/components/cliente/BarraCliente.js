@@ -4,8 +4,23 @@ import { Nav, Container, Navbar,NavDropdown } from "react-bootstrap";
 import { ImUser } from "react-icons/im";
 import { BiExit  } from "react-icons/bi";
 import { BsHouseDoorFill, BsFillClockFill, BsCalendar2Fill } from "react-icons/bs";
+import Cookies from "universal-cookie";
 
 export default class header extends React.Component {
+
+  cerrarseccion(){
+    const cookies = new Cookies();
+
+    //eliminamos la cookies.
+    if (cookies.get("_s")) {
+      cookies.remove("_s");
+    }
+
+    sessionStorage.clear();
+    //lo rederigimos a la login.
+    window.location.href = '/login';
+
+  };
 
   render() {
     return (
@@ -26,7 +41,7 @@ export default class header extends React.Component {
               </Navbar.Brand>    
             
               <NavDropdown title={sessionStorage.getItem('clienteNombre')} id="collasible-nav-dropdown">
-                <NavDropdown.Item href="#"> <BiExit/> Cerrar Seccion</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => this.cerrarseccion()}> <BiExit/> Cerrar Seccion</NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
