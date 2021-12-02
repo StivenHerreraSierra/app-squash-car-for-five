@@ -119,7 +119,7 @@ export default class Login extends React.Component {
   setInformacionUsuario(response, esEmpleado) {    
     if (esEmpleado) {
       sessionStorage.setItem("idEmpleado", response.data.id);
-      sessionStorage.setItem("nombreempleado", response.data.nombre);
+      sessionStorage.setItem("nombreempleado", response.data.nombres);
       sessionStorage.setItem("role", response.data.role);
     } else {
       sessionStorage.setItem("clienteId", response.data.id);

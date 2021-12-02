@@ -2,9 +2,7 @@ import React from "react";
 import { Route, Redirect } from "react-router";
 import { getSession } from "../helper/helper";
 
-const checkAuth = () => {
-  return !getSession() ? false : true;
-};
+
 
 export default class PrivateRouteEmpleado extends React.Component {
   constructor(props) {
@@ -16,10 +14,15 @@ export default class PrivateRouteEmpleado extends React.Component {
   }
 
   componentWillMount() {
+    const estado =  this.checkAuth
     this.setState({
-      auth: checkAuth() && !this.state.auth && this.state.role,
+      auth: estado && !this.state.auth && this.state.role,
     });
   }
+
+   checkAuth () {
+    return !getSession() ? false : true;
+  };
 
   render() {
     const { component: Component, ...rest } = this.props;

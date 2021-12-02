@@ -5,7 +5,8 @@ import { Container, Table, Button,Modal } from "react-bootstrap";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { FcCheckmark } from "react-icons/fc";
 import "./estilos-pendientes.css";
-import Ventanamodal from "./ventanamodal";    
+import Ventanamodal from "./ventanamodal";
+    
 import axios from "axios";
 
 
@@ -20,6 +21,7 @@ class pendientes extends React.Component {
     super(props);
     this.state = {
       Servicios: [],
+      info: [],
       id: "",
       idCliente: "",
       nombreCliente: "",
@@ -32,7 +34,7 @@ class pendientes extends React.Component {
       empleadoEncargado: "",
       estadoModal1:  false,
       estadoModal4: false,
-   
+      estadoModal5: "",
       
      
 
@@ -223,7 +225,24 @@ class pendientes extends React.Component {
 
    } 
   
+   
+   cambiarEstadomodal5(servicio, estadoModal5){
+    
+    this.setState({info : servicio});
+    
+   
+    this.cambiarestado(estadoModal5);
 
+  console.log(this.state.estadoModal5)
+     
+
+
+   } 
+
+   cambiarestado(estadoModal5){
+   const estadomodal5 = !estadoModal5;
+   this.setState({estadoModal5 : estadomodal5})
+   }
     
 
 
@@ -260,7 +279,7 @@ class pendientes extends React.Component {
               <td>{servicio.costo}</td>
               <td>
               <Button variant="ligth"size="sm" onClick={() => this.cambiarEstadoModal1(this.state.estadoModal1, servicio.id, this.state.estadoModal4)}> <FcCheckmark/></Button>
-              <Button variant="ligth"size="sm"><BsFillInfoCircleFill/></Button>
+              <Button variant="ligth"size="sm" onClick={()=>this.cambiarEstadomodal5(servicio, this.state.estadoModal5)}><BsFillInfoCircleFill/></Button>
                </td>
               </tr> 
             
@@ -307,7 +326,29 @@ class pendientes extends React.Component {
            
            </Ventanamodal>    
 
+           <Ventanamodal 
+          estadoModal1 = {this.state.estadoModal5}
+          title = "Informacion Servicio"
+      
+        
+        >
+          <Modal.Body>
+           <p> NombreCliente : {this.state.info.nombreCliente}</p>
+           <p> placa: {this.state.info.idVehiculo}</p>
+           <p> tipo-lavado: {this.state.info.tipo} </p>
+           <p> fecha: {this.state.info.fecha}</p>
+          </Modal.Body>
 
+          <Modal.Footer>
+            <Button variant="secondary"   >
+              Close
+            </Button>
+    
+          </Modal.Footer>
+           
+           </Ventanamodal>    
+
+                 
 
 
 
