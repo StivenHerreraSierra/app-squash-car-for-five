@@ -1,11 +1,11 @@
 import React from "react";
 import Navempleados from "../navempleados";
-import Header from "../../admin/header";
-import { Container, Table, Button } from "react-bootstrap";
+import Header from "./header";
+import { Container, Table, Button,Modal } from "react-bootstrap";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { FcCheckmark } from "react-icons/fc";
-import "./estilos-pendientes.css"
-
+import "./estilos-pendientes.css";
+import Ventanamodal from "./ventanamodal";    
 import axios from "axios";
 
 
@@ -29,6 +29,9 @@ class pendientes extends React.Component {
       tipo: "",
       costo: "",
       observaciones: "", 
+      estadoModal1:  false,
+   
+      
      
 
     };
@@ -36,6 +39,9 @@ class pendientes extends React.Component {
 
   
     componentDidMount(){
+      // declaro el estado del modal a falso.
+      
+
     
     axios.get('http://localhost:3001/servicio/listar')
         .then(response => {
@@ -50,7 +56,10 @@ class pendientes extends React.Component {
     
         
 
-    }
+    
+    
+    
+      }
 
 
     filtrarServiciosPendientes(servicios){
@@ -68,8 +77,11 @@ class pendientes extends React.Component {
 
 
 
-    iniciarLavado(id, servicios){
-       //encontrar servicio.
+    iniciarLavado(idServcio, servicios){
+       
+      
+      const id = parseInt(idServcio);
+      //encontrar servicio.
        const servicio = servicios.filter(servicio =>{ return servicio.id === id})
        
       //cambiar la variable Estado.
@@ -102,6 +114,7 @@ class pendientes extends React.Component {
 
        this.ActualizarEstado(id);
 
+       this.setState({estadoModal1: false}); 
 
      
 
@@ -149,6 +162,21 @@ class pendientes extends React.Component {
     }
     
 
+    cambiarEstadoModal1(estadoModal1, servicioAIniciar){
+
+      const estadomodal1 = !estadoModal1;
+      this.setState({estadoModal1:estadomodal1})
+
+      if(estadoModal1 === false){
+      localStorage.setItem("servicioAIniciar", servicioAIniciar);
+      }else{
+
+        localStorage.setItem("servicioAIniciar", "")
+
+      }
+
+
+    }
 
 
     
@@ -186,7 +214,7 @@ class pendientes extends React.Component {
               <td>{servicio.tipo}</td>
               <td>{servicio.costo}</td>
               <td>
-              <Button variant="ligth"size="sm" onClick={() =>this.iniciarLavado(servicio.id, this.state.Servicios)}><FcCheckmark/></Button>
+              <Button variant="ligth"size="sm" onClick={() => this.cambiarEstadoModal1(this.state.estadoModal1, servicio.id)}> <FcCheckmark/></Button>
               <Button variant="ligth"size="sm"><BsFillInfoCircleFill/></Button>
                </td>
               </tr> 
@@ -194,6 +222,26 @@ class pendientes extends React.Component {
             )}
           </tbody>
         </Table>
+
+
+        <Ventanamodal 
+          estadoModal1 = {this.state.estadoModal1}
+          title = "INICIAR SERVICIO"
+      
+        
+        >
+          <Modal.Body>
+           <p> ¿Estas seguro de que desear iniciar el Lavado?</p>
+          </Modal.Body>
+
+          <Modal.Footer>
+            <Button variant="secondary" onClick={()=> this.cambiarEstadoModal1(this.state.estadoModal1) } >
+              Close
+            </Button>
+            <Button variant="primary" onClick={()=> this.iniciarLavado(localStorage.getItem("servicioAIniciar"), this.state.Servicios) }>INICIAR</Button>
+          </Modal.Footer>
+           
+           </Ventanamodal>
         </Container>
       </Container>
     );

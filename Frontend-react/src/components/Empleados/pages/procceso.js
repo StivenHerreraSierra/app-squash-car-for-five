@@ -1,9 +1,10 @@
 import React from "react";
-import Header from "../../admin/header";
+import Header from "./header";
 import Navempleados from "../navempleados";
-import { Container, Button, Table } from "react-bootstrap";
+import { Container, Button, Table, Modal } from "react-bootstrap";
 import { FcCheckmark } from "react-icons/fc";
 import { FcCancel } from "react-icons/fc";
+import Ventanamodal from "./ventanamodal";
 import axios from "axios";
 
 class procceso extends React.Component {
@@ -20,6 +21,8 @@ class procceso extends React.Component {
       tipo: localStorage.getItem("tipoLavado"),
       costo: localStorage.getItem("costo"),
       observaciones: "",
+      estadoModal2: false,
+      estadoModal3: false,
     };
   }
 
@@ -28,7 +31,7 @@ class procceso extends React.Component {
     servicios.push({
       id: this.state.id,
       placa: this.state.idVehiculo,
-      nombre: this.state.idVehiculo,
+      nombre: this.state.nombreCliente,
       costo: this.state.costo,
       tipo: this.state.tipo,
     });
@@ -75,7 +78,7 @@ class procceso extends React.Component {
 
       this.setState({Servicios : []});
       this.limpiarSessionStorage();
-
+      this.setState({estadoModal3: false})
 
 
   }
@@ -119,13 +122,35 @@ class procceso extends React.Component {
 
       this.setState({Servicios : []});
       this.limpiarSessionStorage();
-
-
+      this.setState({estadoModal2 : false})
+      console.log(this.state.Servicios)
 
   }
 
-  limpiarSessionStorage(){
+  
+  cambiarEstadoModal2(estadoModal2){
+    
+    const estadomodal2 = !estadoModal2;
+    this.setState({estadoModal2:estadomodal2})
+    console.log(estadomodal2)
+    
 
+  }
+
+  cambiarEstadoModal3(estadoModal3){
+    
+    const estadomodal3 = !estadoModal3;
+    this.setState({estadoModal3:estadomodal3})
+    console.log(estadomodal3)
+    
+
+  }
+
+
+
+
+  limpiarSessionStorage(){
+    
     localStorage.clear();
 
 
@@ -159,18 +184,19 @@ class procceso extends React.Component {
               <td>{servicio.tipo}</td>
               <td>{servicio.costo}</td>
               <td>
-              <Button variant="ligth" size="sm"  onClick={() => this.cancelarLAvado()}> 
+              <Button variant="ligth" size="sm"
+               onClick={() => this.cambiarEstadoModal3(this.state.estadoModal3)}
+              
+              > 
                     <FcCancel />
                   </Button>
                   <Button
                     variant="ligth"
                     size="sm"
-                    onClick={() => this.RealizadoLAvado()}
-
-                  >
+                    onClick={() => this.cambiarEstadoModal2(this.state.estadoModal2)}>
                     <FcCheckmark />
                   </Button>
-               </td>
+               </ td>
               </tr> 
             
             )}
@@ -178,6 +204,48 @@ class procceso extends React.Component {
             </thead>
             <tbody></tbody>
           </Table>
+
+          <Ventanamodal
+             estadoModal1 = {this.state.estadoModal2}
+             title = "Completar SERVICIO"
+                
+          >
+          <Modal.Body>
+           <p> ¿Estas seguro que has completado el Lavado?</p>
+          </Modal.Body>
+
+          <Modal.Footer>
+            <Button variant="secondary" onClick={()=> this.cambiarEstadoModal2(this.state.estadoModal2) } >
+              Cerrar
+            </Button>
+            <Button variant="success" onClick={()=> this.RealizadoLAvado() }>FINALIZAR</Button>
+          </Modal.Footer>
+            
+                
+            
+            </Ventanamodal>      
+
+          <Ventanamodal
+             estadoModal1 = {this.state.estadoModal3}
+             title = "Cancelar SERVICIO"
+                
+          >
+          <Modal.Body>
+           <p> ¿Estas seguro que deseas cancelar el Lavado?</p>
+          </Modal.Body>
+
+          <Modal.Footer>
+            <Button variant="secondary" onClick={()=> this.cambiarEstadoModal2(this.state.estadoModal3) } >
+              Cerrar
+            </Button>
+            <Button variant="danger" onClick={()=> this.cancelarLAvado() }>Cancelar</Button>
+          </Modal.Footer>
+            
+                
+            
+            </Ventanamodal>        
+
+
         </Container>
       </Container>
     );

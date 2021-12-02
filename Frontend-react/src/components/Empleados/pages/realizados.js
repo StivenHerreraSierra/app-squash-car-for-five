@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../../admin/header";
+import Header from "./header";
 import Navempleados from "../navempleados"
 import {Container,Table,Button,} from "react-bootstrap"
 import axios from "axios";
