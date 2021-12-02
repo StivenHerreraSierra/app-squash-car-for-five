@@ -21,6 +21,7 @@ class procceso extends React.Component {
       tipo: localStorage.getItem("tipoLavado"),
       costo: localStorage.getItem("costo"),
       observaciones: "",
+      empleadoEncargado: sessionStorage.getItem("nombreempleado"),
       estadoModal2: false,
       estadoModal3: false,
     };
@@ -51,7 +52,7 @@ class procceso extends React.Component {
     const costo = this.state.costo;
     const observaciones = this.state.observaciones;
     const estado = "Cancelado";
-
+    const empleadoEncargado = this.state.empleadoEncargado;
     const servicio = {
       id,
       idCliente, //es el nro de documento.
@@ -62,6 +63,7 @@ class procceso extends React.Component {
       tipo,
       costo,
       observaciones,
+      empleadoEncargado,
     };
 
     //update estado in bd.
@@ -95,6 +97,7 @@ class procceso extends React.Component {
     const costo = this.state.costo;
     const observaciones = this.state.observaciones;
     const estado = "Realizado";
+    const empleadoEncargado = this.state.empleadoEncargado;
 
     const servicio = {
       id,
@@ -106,6 +109,7 @@ class procceso extends React.Component {
       tipo,
       costo,
       observaciones,
+      empleadoEncargado,
     };
 
     //update estado in bd.

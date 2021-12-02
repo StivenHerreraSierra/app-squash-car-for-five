@@ -42,10 +42,11 @@ export default class Reservas extends React.Component {
 
   componentDidMount() {
     this.limpiarCampos();
-
+    let idcliente = sessionStorage.getItem('clienteNumeroDocumento');
+    idcliente = parseInt(idcliente);
     this.setState({
       cliente: {
-        idCliente: sessionStorage.getItem('clienteNumeroDocumento'),
+        idCliente: idcliente,
         nombreCliente: sessionStorage.getItem('clienteNombre')
       }
     });

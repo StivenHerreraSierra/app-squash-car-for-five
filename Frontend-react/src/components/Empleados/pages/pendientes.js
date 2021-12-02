@@ -29,6 +29,7 @@ class pendientes extends React.Component {
       tipo: "",
       costo: "",
       observaciones: "", 
+      empleadoEncargado: "",
       estadoModal1:  false,
    
       
@@ -138,6 +139,7 @@ class pendientes extends React.Component {
       const costo = localStorage.getItem("costo");
       const observaciones = localStorage.getItem("observaciones");
       const estado = localStorage.getItem("estado");
+      const empleadoEncargado = sessionStorage.getItem("nombreempleado");
   
       const servicio = {
         id,
@@ -148,6 +150,7 @@ class pendientes extends React.Component {
         tipo,
         costo,
         observaciones,
+        empleadoEncargado,
       };
 
       console.log(servicio)
