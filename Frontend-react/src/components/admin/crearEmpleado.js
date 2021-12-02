@@ -38,21 +38,22 @@ export default class CrearEmpleado extends React.Component {
     }));
   }
 
-  establecerAlerta(show, mensaje, tipoAlerta) {
+  establecerAlerta(mensaje, tipoAlerta = 0) {
     this.setState({
       alerta: {
-        show: show,
+        show: true,
         mensaje: mensaje,
         tipoAlerta: tipoAlerta,
       },
     });
+
+    setTimeout(() => {
+      this.setState({ alerta: { show: false } });
+    }, 1200);
   }
 
   guardarEmpleado() {
     if (!this.verificarInputs()) {
-      setTimeout(() => {
-        this.establecerAlerta(false, "", 0);
-      }, 2000);
       return;
     }
 
@@ -62,15 +63,12 @@ export default class CrearEmpleado extends React.Component {
       .post("/empleados", this.state.empleado)
       .then((response) => {
         if (response.data.exito) {
-          this.establecerAlerta(true, response.data.msg, 0);
+          this.establecerAlerta(response.data.msg);
           setTimeout(() => {
             window.location.reload();
-          }, 1500);
+          }, 1200);
         } else {
-          this.establecerAlerta(true, response.data.msg, 1);
-          setTimeout(() => {
-            this.establecerAlerta(false, "", 0);
-          }, 2000);
+          this.establecerAlerta(response.data.msg, 1);
         }
 
         this.setState({ loading: false });
@@ -91,7 +89,7 @@ export default class CrearEmpleado extends React.Component {
     ) {
       return true;
     } else {
-      this.establecerAlerta(true, "Todos los campos son obligatorios", 1);
+      this.establecerAlerta("Todos los campos son obligatorios", 1);
 
       return false;
     }
@@ -101,9 +99,9 @@ export default class CrearEmpleado extends React.Component {
     return (
       <Container>
         <Loading show={this.state.loading} />
-        <Header />
+        <Header Registrar={true} />
         <Container id="admin-container">
-          <h1 id="admin-h1">Registro empleados</h1>
+          <h1 id="admin-h1">Crear empleado</h1>
 
           <Form className="shadow p-3 mb-3 bg-body rounded p-4">
             <Alerta

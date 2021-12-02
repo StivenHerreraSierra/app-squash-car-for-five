@@ -7,23 +7,14 @@ const tipoAlert = ["success", "danger"];
 export default class AlertaAccion extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { show: false, text: ""};
+    this.state = { show: false, text: "" };
   }
 
-  componentWillReceiveProps(props) {    
-    if (props.show) {
-      this.setState({
-        show: true,
-        text: props.text,        
-      });
-      this.ocultarMensaje();
-    }
-  }
-
-  ocultarMensaje() {
-    setTimeout(() => {
-      this.setState({ show: false });
-    }, 1200);
+  componentWillReceiveProps(props) {
+    this.setState({
+      show: props.show,
+      text: props.text,
+    });
   }
 
   render() {

@@ -19,17 +19,22 @@ export default class Login extends React.Component {
       usuario: "",
       pass: "",
       tipoDocumento: "CC",
-      mensajeErrorShow: false,
-      mensajeError: "",
       esCliente: true,
       mensaje: "Usuarios registrados",
+      informacionUsuario: {
+        id: "",
+        nombre: "",
+        role: "",
+      },
+      alerta: {
+        show: false,
+        mensaje: "",
+        tipoAlerta: 0,
+      },
     };
   }
 
   componentDidMount() {
-    if (cookies.get("_s")) {
-      cookies.remove("_s");
-    }
     if (window.location.pathname.includes("empleados")) {
       this.setState({ esCliente: false, mensaje: "Empleados" });
     }
@@ -50,18 +55,23 @@ export default class Login extends React.Component {
             path: "/",
             expires: calculaExtraccionSesion(),
           });
-          this.props.history.push("/admin");
+
+          this.setInformacionUsuario(response, true);
+
+          const ruta =
+            response.data.role === "Administrador" ? "/admin" : "/empleados";
+
+          this.establecerAlerta(response.data.mensaje);
+
+          setTimeout(() => {
+            this.props.history.push(ruta);
+          }, 800);
         } else {
-          this.setState({
-            mensajeErrorShow: true,
-            mensajeError: response.data.mensaje,
-          });
+          this.establecerAlerta(response.data.mensaje, 1);
         }
 
         this.setState({
           loading: false,
-          mensajeErrorShow: false,
-          mensajeError: "",
         });
       })
       .catch((err) => {
@@ -70,6 +80,11 @@ export default class Login extends React.Component {
   }
 
   iniciarSesionCte() {
+    if (this.state.usuario.search(/\D/g) >= 0) {
+      this.establecerAlerta("Credenciales incorrectas", 1);
+      return;
+    }
+
     this.setState({ loading: true });
     axios
       .post(`${host}/cliente/login`, {
@@ -83,19 +98,51 @@ export default class Login extends React.Component {
             path: "/",
             expires: calculaExtraccionSesion(),
           });
-          this.props.history.push("/clientes-inicio");
+
+          this.establecerAlerta(response.data.mensaje);
+          this.setInformacionUsuario(response, false);
+
+          setTimeout(() => {
+            this.props.history.push("/historialCliente");
+          }, 800);
         } else {
-          this.setState({
-            mensajeErrorShow: true,
-            mensajeError: response.data.mensaje,
-          });
+          this.establecerAlerta(response.data.mensaje, 1);
         }
 
-        this.setState({ loading: false, mensajeErrorShow: false });
+        this.setState({ loading: false });
       })
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  setInformacionUsuario(response, esEmpleado) {    
+    if (esEmpleado) {
+      sessionStorage.setItem("idEmpleado", response.data.id);
+      sessionStorage.setItem("nombreempleado", response.data.nombre);
+      sessionStorage.setItem("role", response.data.role);
+    } else {
+      sessionStorage.setItem("clienteId", response.data.id);
+      sessionStorage.setItem(
+        "clienteNumeroDocumento",
+        response.data.numeroDocumento
+      );
+      sessionStorage.setItem("clienteNombre", response.data.nombres);
+    }
+  }
+
+  establecerAlerta(mensaje, tipoAlerta = 0) {
+    this.setState({
+      alerta: {
+        show: true,
+        mensaje: mensaje,
+        tipoAlerta: tipoAlerta,
+      },
+    });
+
+    setTimeout(() => {
+      this.setState({ alerta: { show: false } });
+    }, 1200);
   }
 
   render() {
@@ -107,11 +154,11 @@ export default class Login extends React.Component {
           <h1>Inicio sesion</h1>
           <h3>{this.state.mensaje}</h3>
 
-          <Form className="shadow p-3 mb-3 bg-body rounded p-4">
+          <Form className="shadow p-3 mb-5 bg-body rounded p-4">
             <Alerta
-              show={this.state.mensajeErrorShow}
-              text={this.state.mensajeError}
-              tipoAlerta={1}
+              show={this.state.alerta.show}
+              text={this.state.alerta.mensaje}
+              tipoAlerta={this.state.alerta.tipoAlerta}
             />
             <Form.Group className="mb-3" controlId="usuarioId">
               <Form.Label>Usuario</Form.Label>
@@ -157,12 +204,20 @@ export default class Login extends React.Component {
               Ingresar
             </Button>
           </Form>
-          {this.state.esCliente && (
-            <span>
+          {this.state.esCliente ? (
+            <div>
               Usuario no registrado?
               <br />
-              <a href="/registro">Registrarme</a>{" "}
-            </span>
+              <a href="/registro">Registrarme</a>
+              <br />
+              <br />
+              <br />
+              <a href="/login-empleados">Inicio sesion para empleados</a>
+            </div>
+          ) : (
+            <div>
+              <a href="/login">Inicio sesion para usuarios</a>
+            </div>
           )}
         </Container>
       </Container>

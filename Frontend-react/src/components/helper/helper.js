@@ -56,4 +56,26 @@ export const request = {
       },
     });
   },
+
+  actualizarEmpleado: function (services, data) {
+    let token = renovarSesion();
+    return axios.patch(`${host}${services}`, data, {
+      headers: {
+        Authorization: token,
+      },
+    });
+  },
+
+  eliminarEmpleado: function (services) {
+    let token = renovarSesion();
+    return axios.delete(`${host}${services}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+  },
+
+  crearCliente: function (services, data) {
+    return axios.post(`${host}${services}`, data);
+  },
 };

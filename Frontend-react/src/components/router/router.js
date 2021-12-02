@@ -1,25 +1,26 @@
 import React from "react";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Empleados from "../Empleados/empleados";
 import Login from "../login/login";
 import HistorialCliente from "../cliente/historial/HistorialCliente";
 import ReservarCliente from "../cliente/reservas/ReservasCliente";
 import AdminSite from "../admin/inicio";
+import AdminSiteServicios from "../admin/mostrarServicios";
 import CrearEmpleado from "../admin/crearEmpleado";
 import EliminarEmpleado from "../admin/eliminarEmpleado";
 import EditarEmpleado from "../admin/editarEmpleado";
 import Pendientes from "../Empleados/pages/pendientes";
 import Procceso from "../Empleados/pages/procceso";
 import Realizados from "../Empleados/pages/realizados";
+
+//Manejo rutas
 import PrivateRoute from "../Auth/PrivateRoute";
+import PrivateRouteEmpleado from "../Auth/PrivateRouteEmpleado";
+import PrivateRouteAdmin from "../Auth/PrivateRouteAdmin";
+import PublicRoute from "../Auth/PublicRoute";
+
 
 import Registro from "../registro/registro";
 import Clientes from "../cliente/index";
@@ -30,34 +31,62 @@ export default function AppRouter() {
   return (
     <Router>
       <Switch>
-        <Route
+        <PublicRoute
           exact
           path={["/", "/login", "/login-empleados"]}
           component={Login}
         />
         {/*PrivateRoute para rutas que no deben ser accedidas si no estan con token */}
-        <Route
+        <PrivateRoute
           exact
           path={["/historialCliente"]}
           component={HistorialCliente}
         />
-        <Route exact path={["/reservar"]} component={ReservarCliente} />
-        <Route exact path={["/admin"]} component={AdminSite} />
-        <PrivateRoute exact path={["/admin"]} component={AdminSite} />
-        <Route exact path={["/crear-empleado"]} component={CrearEmpleado} />
-        <Route
+        <PrivateRoute exact path={["/reservar"]} component={ReservarCliente} />
+        <PrivateRouteAdmin exact path={["/admin"]} component={AdminSite} />
+        <PrivateRouteAdmin
           exact
-          path={["/eliminar-empleado"]}
+          path={["/admin/historico"]}
+          component={AdminSiteServicios}
+        />
+        <PrivateRouteAdmin
+          exact
+          path={["/admin/crear-empleado"]}
+          component={CrearEmpleado}
+        />
+        <PrivateRouteAdmin
+          exact
+          path={["/admin/eliminar-empleado"]}
           component={EliminarEmpleado}
         />
-        <Route exact path={["/editar-empleado"]} component={EditarEmpleado} />
-        <Route exact path={["/empleados"]} component={Empleados} />
-        <Route exact path={["/pendientes"]} component={Pendientes} />
-        <Route exact path={["/procceso"]} component={Procceso} />
-        <Route exact path={["/realizados"]} component={Realizados} />
+        <PrivateRouteAdmin
+          exact
+          path={["/admin/editar-empleado"]}
+          component={EditarEmpleado}
+        />
+        <PrivateRouteEmpleado
+          exact
+          path={["/empleados"]}
+          component={Empleados}
+        />
+        <PrivateRouteEmpleado
+          exact
+          path={["/pendientes"]}
+          component={Pendientes}
+        />
+        <PrivateRouteEmpleado exact path={["/procceso"]} component={Procceso} />
+        <PrivateRouteEmpleado
+          exact
+          path={["/realizados"]}
+          component={Realizados}
+        />
 
-        <Route exact path={["/registro"]} component={Registro} />
-        <Route exact path={["/clientes"]} component={Clientes} />
+        <PublicRoute exact path={["/registro"]} component={Registro} />
+        <PrivateRouteAdmin
+          exact
+          path={["/admin/clientes"]}
+          component={Clientes}
+        />
         <Route exact path={["/clientes-inicio"]} component={InicioClientes} />
         <Route exact path={["/clientes-index"]} component={IndexClientes} />
         <Route

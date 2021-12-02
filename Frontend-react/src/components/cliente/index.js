@@ -15,7 +15,7 @@ export default class Clientes extends React.Component {
   render() {
     return (
       <Container id="clientes-container">
-        <HeaderAdmin />
+        <HeaderAdmin Clientes={true}/>
         <Row>
           <Nav
             fill
