@@ -17,11 +17,12 @@ export default class Reservas extends React.Component {
         nombrecliente: "",
       },
       servicio: {
-        fecha: '',
+        fecha: "",
         placa: "",
         tipoVehiculo: "Automóvil",
         tipoLavado: "Convencional",
         observaciones: "",
+        
       },
       show: false
     };
@@ -44,8 +45,8 @@ export default class Reservas extends React.Component {
 
     this.setState({
       cliente: {
-        idCliente: sessionStorage.getItem('idCliente'),
-        nombreCliente: sessionStorage.getItem('nombreCliente')
+        idCliente: sessionStorage.getItem('clienteNumeroDocumento'),
+        nombreCliente: sessionStorage.getItem('clienteNombre')
       }
     });
   }
@@ -58,6 +59,7 @@ export default class Reservas extends React.Component {
         tipoVehiculo: this.state.servicio.tipoVehiculo,
         tipoLavado: this.state.servicio.tipoLavado,
         observaciones: this.state.servicio.observaciones,
+        
       },
     });
   }
@@ -70,6 +72,7 @@ export default class Reservas extends React.Component {
         tipoVehiculo: this.state.servicio.tipoVehiculo,
         tipoLavado: this.state.servicio.tipoLavado,
         observaciones: this.state.servicio.observaciones,
+        
       },
     });
   }
@@ -82,6 +85,7 @@ export default class Reservas extends React.Component {
         tipoVehiculo: nuevoTipoVehiculo,
         tipoLavado: this.state.servicio.tipoLavado,
         observaciones: this.state.servicio.observaciones,
+        
       },
     });
   }
@@ -94,6 +98,7 @@ export default class Reservas extends React.Component {
         tipoVehiculo: this.state.servicio.tipoVehiculo,
         tipoLavado: nuevoTipoLavado,
         observaciones: this.state.servicio.observaciones,
+        
       },
     });
   }
@@ -166,6 +171,7 @@ export default class Reservas extends React.Component {
         tipoVehiculo: '',
         tipoLavado: '',
         observaciones: '',
+        empleadoEncargado: ''
       },
     });
   }

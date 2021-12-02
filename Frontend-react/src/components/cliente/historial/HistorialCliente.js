@@ -12,7 +12,7 @@ export default class HistorialCliente extends React.Component {
     super(props);
     this.state = {
       listaServicios: [],
-      idCliente: sessionStorage.getItem('idCliente')
+      idCliente: sessionStorage.getItem('clienteNumeroDocumento')
     }
 
     this.obtenerListaServiciosFiltrada = this.obtenerListaServiciosFiltrada.bind(this);
