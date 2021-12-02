@@ -31,6 +31,7 @@ class pendientes extends React.Component {
       observaciones: "", 
       empleadoEncargado: "",
       estadoModal1:  false,
+      estadoModal4: false,
    
       
      
@@ -49,7 +50,10 @@ class pendientes extends React.Component {
           const Servicios = response.data;
           console.log(Servicios)
           this.filtrarServiciosPendientes(Servicios)
+          this.filtrarServicioIniciado(Servicios);
         }); 
+
+      
 
 
         
@@ -71,6 +75,31 @@ class pendientes extends React.Component {
       console.log(serviciosPendientes)
 
     }
+
+    filtrarServicioIniciado(servicios){
+
+
+      //------se filtran los servicios del empleado y que esten en estado Iniciado.
+      const servciosIniciados =  servicios.filter(servicio => {return servicio.empleadoEncargado === this.state.empleadoEncargado && servicio.estado === 'Iniciado'});
+      servciosIniciados.map(servicio => {
+
+        localStorage.setItem("id", servicio.id)
+        localStorage.setItem("id_clientes", servicio.id_cliente);
+        localStorage.setItem("placa", servicio.idVehiculo);
+        localStorage.setItem("Nombre" ,servicio.nombreCliente);
+        localStorage.setItem("tipoLavado", servicio.tipo);
+        localStorage.setItem("costo", servicio.costo );
+        localStorage.setItem("estado", servicio.estado);
+        localStorage.setItem("observaciones", servicio.observaciones);
+        localStorage.setItem("fecha", servicio.fecha);
+
+      })
+      
+
+
+
+    }
+
 
 
 
@@ -99,6 +128,7 @@ class pendientes extends React.Component {
         localStorage.setItem("id_clientes", servicio.id_cliente);
         localStorage.setItem("placa", servicio.idVehiculo);
         localStorage.setItem("Nombre" ,servicio.nombreCliente);
+        localStorage.setItem("fecha", servicio.fecha)
         localStorage.setItem("tipoLavado", servicio.tipo);
         localStorage.setItem("costo", servicio.costo );
         localStorage.setItem("estado", servicio.estado);
@@ -165,8 +195,13 @@ class pendientes extends React.Component {
     }
     
 
-    cambiarEstadoModal1(estadoModal1, servicioAIniciar){
+    cambiarEstadoModal1(estadoModal1, servicioAIniciar, estadoModal4){
+ 
+      if(localStorage.length > 0){
+        this.cambiarEstadomodal4(estadoModal4);
 
+      }
+      else{
       const estadomodal1 = !estadoModal1;
       this.setState({estadoModal1:estadomodal1})
 
@@ -177,10 +212,17 @@ class pendientes extends React.Component {
         localStorage.setItem("servicioAIniciar", "")
 
       }
-
-
     }
+  }
 
+
+   cambiarEstadomodal4(estadoModal4){
+
+    const estadomodal4= !estadoModal4;
+    this.setState({estadoModal4 : estadomodal4});
+
+   } 
+  
 
     
 
@@ -217,7 +259,7 @@ class pendientes extends React.Component {
               <td>{servicio.tipo}</td>
               <td>{servicio.costo}</td>
               <td>
-              <Button variant="ligth"size="sm" onClick={() => this.cambiarEstadoModal1(this.state.estadoModal1, servicio.id)}> <FcCheckmark/></Button>
+              <Button variant="ligth"size="sm" onClick={() => this.cambiarEstadoModal1(this.state.estadoModal1, servicio.id, this.state.estadoModal4)}> <FcCheckmark/></Button>
               <Button variant="ligth"size="sm"><BsFillInfoCircleFill/></Button>
                </td>
               </tr> 
@@ -245,6 +287,30 @@ class pendientes extends React.Component {
           </Modal.Footer>
            
            </Ventanamodal>
+
+           <Ventanamodal 
+          estadoModal1 = {this.state.estadoModal4}
+          title = "YA TIENES UN SERVICIO INICIADO"
+      
+        
+        >
+          <Modal.Body>
+           <p> ¡Ya tienes un servicio iniciado!, debes de completar o cancelar el servicio actual.</p>
+          </Modal.Body>
+
+          <Modal.Footer>
+            <Button variant="secondary" onClick={()=> this.cambiarEstadomodal4(this.state.estadoModal4) } >
+              Close
+            </Button>
+    
+          </Modal.Footer>
+           
+           </Ventanamodal>    
+
+
+
+
+
         </Container>
       </Container>
     );
