@@ -3,33 +3,31 @@ import { Route, Redirect } from "react-router";
 import { getSession } from "../helper/helper";
 
 const checkAuth = () => {
-  return !getSession() ? false : true;
+  return getSession() ? false : true;
 };
 
-export default class PrivateRoute extends React.Component {
+export default class PublicRoute extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       auth: false,
-      role: sessionStorage.getItem("role"),
+      role: localStorage.getItem("role"),
       redirect: "",
     };
   }
 
   componentWillMount() {
     let redirect = "";
-    let esCliente = true;
 
     if (this.state.role) {
-      esCliente = false;
       redirect = this.state.role === "Administrador" ? "/admin" : "/empleados";
     } else {
-      redirect = "/login";
+      redirect = "/historialCliente";
     }
 
     this.setState({
       redirect: redirect,
-      auth: checkAuth() && !this.state.auth && esCliente,
+      auth: checkAuth() && !this.state.auth,
     });
   }
 

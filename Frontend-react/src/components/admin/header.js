@@ -1,6 +1,8 @@
 import React from "react";
+import Cookies from "universal-cookie";
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import { AiFillHome } from "react-icons/ai";
+import { BsClockHistory } from "react-icons/bs";
 import {
   FaUserPlus,
   FaUserMinus,
@@ -9,17 +11,15 @@ import {
 } from "react-icons/fa";
 import { ImExit } from "react-icons/im";
 
-export default class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      esHome: false,
-    };
-  }
+const cookies = new Cookies();
 
-  componentDidMount() {
-    const esHome = window.location.pathname !== "/admin";
-    this.setState({ esHome: esHome });
+export default class Header extends React.Component {
+  cerrarSesion(key) {
+    if (key === "Cerrar") {
+      cookies.remove("_s", { path: "/" });
+      sessionStorage.clear();
+      window.location.replace("/login-empleados");
+    }
   }
 
   render() {
@@ -39,32 +39,43 @@ export default class Header extends React.Component {
               </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-              <Nav className="justify-content-end flex-grow-1 pe-3">
-                <Nav.Link href="/crear-empleado">
-                  <span>
-                    <FaUserPlus />
-                    {"\t"}Crear empleado
-                  </span>
-                </Nav.Link>
-                <Nav.Link href="/editar-empleado">
-                  <span>
-                    <FaUserEdit />
-                    {"\t"}Editar empleado
-                  </span>
-                </Nav.Link>
-                <Nav.Link href="/eliminar-empleado">
-                  <span>
-                    <FaUserMinus />
-                    {"\t"}Eliminar empleado
-                  </span>
-                </Nav.Link>
-                <Nav.Link href="/clientes">
-                  <span>
-                    <FaUserCheck />
-                    {"\t"}Gestion de Clientes
-                  </span>
-                </Nav.Link>                
-                {this.state.esHome && (
+              <Nav
+                className="justify-content-end flex-grow-1 pe-3"
+                onSelect={(key) => this.cerrarSesion(key)}
+              >
+                {!this.props.Registrar && (
+                  <Nav.Link href="/admin/crear-empleado">
+                    <span>
+                      <FaUserPlus />
+                      {"\t"}Crear empleado
+                    </span>
+                  </Nav.Link>
+                )}
+                {!this.props.Editar && (
+                  <Nav.Link href="/admin/editar-empleado">
+                    <span>
+                      <FaUserEdit />
+                      {"\t"}Editar empleado
+                    </span>
+                  </Nav.Link>
+                )}
+                {!this.props.Eliminar && (
+                  <Nav.Link href="/admin/eliminar-empleado">
+                    <span>
+                      <FaUserMinus />
+                      {"\t"}Eliminar empleado
+                    </span>
+                  </Nav.Link>
+                )}
+                {!this.props.Clientes && (
+                  <Nav.Link href="/admin/clientes">
+                    <span>
+                      <FaUserCheck />
+                      {"\t"}Gestion de Clientes
+                    </span>
+                  </Nav.Link>
+                )}
+                {!this.props.Home && (
                   <Nav.Link href="/admin">
                     <span>
                       <AiFillHome />
@@ -72,7 +83,15 @@ export default class Header extends React.Component {
                     </span>
                   </Nav.Link>
                 )}
-                <Nav.Link href="/login-empleados">
+                {!this.props.Servicios && (
+                  <Nav.Link href="/admin/historico">
+                    <span>
+                      <BsClockHistory />
+                      {"\t"}Histórico servicios
+                    </span>
+                  </Nav.Link>
+                )}
+                <Nav.Link eventKey="Cerrar">
                   <span>
                     <ImExit />
                     {"\t"}Cerrar sesion

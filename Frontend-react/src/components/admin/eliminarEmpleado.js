@@ -20,9 +20,9 @@ export default class EliminarEmpleado extends React.Component {
     return (
       <Container>
         <Loading show={this.state.loading} />
-        <Header />
+        <Header Eliminar={true} />
         <h1 id="admin-h1">Eliminar empleado</h1>
-        <BuscarEmpleado searchMode={true} action={"Eliminar"}/>
+        <BuscarEmpleado editMode={false} action={"Eliminar"} />
       </Container>
     );
   }

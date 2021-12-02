@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Form, Button, Col } from "react-bootstrap";
 import { request } from "../../helper/helper";
+import Alerta from "../../Alerta/alertaAccion";
 
 export default class CrearCliente extends React.Component {
   constructor(props) {
@@ -9,10 +10,15 @@ export default class CrearCliente extends React.Component {
       cliente: {
         nombres: "",
         apellidos: "",
-        tipoDocumento: "",
+        tipoDocumento: "CC",
         numeroDocumento: 0,
         telefono: 0,
         pass: "",
+      },
+      alerta: {
+        show: false,
+        mensaje: "",
+        tipoAlerta: 0,
       },
     };
   }
@@ -28,13 +34,34 @@ export default class CrearCliente extends React.Component {
 
   guardarCliente() {
     request
-      .post("/cliente", this.state.cliente)
+      .crearCliente("/cliente", this.state.cliente)
       .then((response) => {
-        console.log(response.data);
+        if (response.data.nombres) {
+          this.establecerAlerta(response.data.mensaje);
+          setTimeout(() => {
+            window.location.reload();
+          }, 800);
+        } else {
+          this.establecerAlerta(response.data.mensaje, 1);
+        }
       })
       .catch((err) => {
         console.error(err);
       });
+  }
+
+  establecerAlerta(mensaje, tipoAlerta = 0) {
+    this.setState({
+      alerta: {
+        show: true,
+        mensaje: mensaje,
+        tipoAlerta: tipoAlerta,
+      },
+    });
+
+    setTimeout(() => {
+      this.setState({ alerta: { show: false } });
+    }, 1200);
   }
 
   render() {
@@ -45,6 +72,11 @@ export default class CrearCliente extends React.Component {
         </Row>
         <Row>
           <Form>
+            <Alerta
+              show={this.state.alerta.show}
+              text={this.state.alerta.mensaje}
+              tipoAlerta={this.state.alerta.tipoAlerta}
+            />
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridName">
                 <Form.Label>Nombre(s)</Form.Label>
@@ -74,10 +106,8 @@ export default class CrearCliente extends React.Component {
                     this.setValue("tipoDocumento", e.target.value)
                   }
                 >
-                  <option>Seleccione su tipo de documento</option>
                   <option value="CC">Cédula de Ciudadanía</option>
-                  <option value="CE">Cédula de Extrangería</option>
-                  <option value="PTE">Pasaporte</option>
+                  <option value="CE">Cédula de Extranjería</option>
                 </Form.Select>
               </Form.Group>
 
@@ -114,7 +144,10 @@ export default class CrearCliente extends React.Component {
             <Button
               variant="primary"
               type="submit"
-              onClick={() => console.log(this.guardarCliente())}
+              onClick={(e) => {
+                e.preventDefault();
+                this.guardarCliente();
+              }}
             >
               GUARDAR
             </Button>

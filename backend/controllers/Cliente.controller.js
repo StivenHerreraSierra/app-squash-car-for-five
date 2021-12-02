@@ -5,8 +5,10 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 ClienteController.crearCliente = async (req, res) => {
-  const { nombres, apellidos, tipoDocumento, numeroDocumento, telefono, pass } =
+  const { nombres, apellidos, tipoDocumento, numeroDocumento, telefono } =
     req.body;
+
+  const pass = await bcrypt.hash(req.body.pass, 10);
 
   const NuevoCliente = new Cliente({
     nombres,
@@ -26,15 +28,16 @@ ClienteController.crearCliente = async (req, res) => {
       mensaje: "El número de cédula ya existe",
     });
   } else {
-    const token = jwt.sign({ _id: NuevoCliente._id }, "Secreta");
+    const clienteGuardado = await NuevoCliente.save();
 
-    await NuevoCliente.save();
+    const token = jwt.sign({ _id: clienteGuardado._id }, "Secreta");
 
     res.json({
-      mensaje: "Bienvenido",
-      id: NuevoCliente._id,
-      nombre: NuevoCliente.nombre,
+      mensaje: "El cliente ha sido creado",
+      id: clienteGuardado._id,
+      nombres: clienteGuardado.nombres,
       token: token,
+      numeroDocumento: clienteGuardado.numeroDocumento,
     });
   }
 };
@@ -59,12 +62,15 @@ ClienteController.find = async function (req, res) {
 ClienteController.login = async (req, res) => {
   const numeroDocumento = req.body.numeroDocumento;
   const pass = req.body.pass;
-  const tipoDocumento = req.body.tipoDocumento;  
+  const tipoDocumento = req.body.tipoDocumento;
+
+  console.log(numeroDocumento, pass, tipoDocumento);
 
   const cliente = await Cliente.findOne({
     numeroDocumento: numeroDocumento,
     tipoDocumento: tipoDocumento,
   });
+
   /*  const { nombre, cedula } = req.body;
   const cliente = await Cliente.findOne({ nombre: nombre, cedula });
 */
@@ -72,21 +78,36 @@ ClienteController.login = async (req, res) => {
     return res.json({
       mensaje: `El nombre o cédula no se encuentra registrado en los clientes`,
     });
-  }  
+  }
 
-  if (pass === cliente.pass) {
+  const match = await bcrypt.compare(pass, cliente.pass);
+
+  if (match) {
     const token = jwt.sign({ _id: cliente._id }, "Secreta");
     res.json({
       mensaje: "Bienvenido",
       id: cliente._id,
-      nombre: cliente.nombre,
+      nombres: cliente.nombres,
       token: token,
-    });    
+      numeroDocumento: cliente.numeroDocumento,
+    });
   } else {
     res.json({
       mensaje: "Credenciales inválidas para clientes",
-    });    
+    });
   }
+};
+
+ClienteController.remove = function (req, res) {
+  Cliente.findByIdAndDelete({ _id: req.params.id }, function (err) {
+    if (err) {
+      console.log(err);
+      res.json({ mensaje: "Error al eliminar el cliente" });
+      return;
+    }
+
+    res.json({ mensaje: "El cliente ha sido eliminado" });
+  });
 };
 
 module.exports = ClienteController;
