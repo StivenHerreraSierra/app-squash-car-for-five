@@ -3,12 +3,7 @@ import Cookies from "universal-cookie";
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import { AiFillHome } from "react-icons/ai";
 import { BsClockHistory } from "react-icons/bs";
-import {
-  FaUserPlus,
-  FaUserMinus,
-  FaUserEdit,
-  FaUserCheck,
-} from "react-icons/fa";
+import { FaUserPlus, FaUserMinus, FaUserEdit } from "react-icons/fa";
 import { ImExit } from "react-icons/im";
 
 const cookies = new Cookies();
@@ -67,14 +62,7 @@ export default class Header extends React.Component {
                     </span>
                   </Nav.Link>
                 )}
-                {!this.props.Clientes && (
-                  <Nav.Link href="/admin/clientes">
-                    <span>
-                      <FaUserCheck />
-                      {"\t"}Gestion de Clientes
-                    </span>
-                  </Nav.Link>
-                )}
+
                 {!this.props.Home && (
                   <Nav.Link href="/admin">
                     <span>
