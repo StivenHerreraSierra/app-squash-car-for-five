@@ -24,6 +24,7 @@ import PublicRoute from "../Auth/PublicRoute";
 
 import Registro from "../registro/registro";
 import Clientes from "../cliente/index";
+import pendientes from "../Empleados/pages/pendientes";
 import InicioClientes from "../cliente/inicio/InicioCliente";
 import IndexClientes from "../cliente/index";
 
@@ -59,6 +60,7 @@ export default function AppRouter() {
           path={["/admin/eliminar-empleado"]}
           component={EliminarEmpleado}
         />
+
         <PrivateRouteAdmin
           exact
           path={["/admin/editar-empleado"]}
@@ -67,7 +69,7 @@ export default function AppRouter() {
         <PrivateRouteEmpleado
           exact
           path={["/empleados"]}
-          component={Empleados}
+          component={Pendientes}
         />
         <PrivateRouteEmpleado
           exact

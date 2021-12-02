@@ -6,11 +6,12 @@ const ServicioSchema = new Schema({
     idCliente: String, //es el nro de documento.
     nombreCliente: String,
     idVehiculo: String, //es la placa del vehículo.
-    fecha: Date,
+    fecha: String,
     estado: String,
     tipo: String,
     costo: Number,
-    observaciones: String
+    observaciones: String,
+    empleadoEncargado: String
 });
 
 module.exports = mongoose.model('Servicio', ServicioSchema);

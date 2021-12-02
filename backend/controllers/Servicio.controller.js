@@ -5,7 +5,7 @@ const Vehiculo = require('../models/Vehiculo.model');
 const Servicio = require('../models/Servicio.model');
 
 ServicioController.registrarServicio = async(servicio) => {
-    const { idCliente, nombreCliente, placa, fecha, estado, tipoLavado, costo, observaciones } = servicio;
+    const { idCliente, nombreCliente, placa, fecha, estado, tipoLavado, observaciones } = servicio;
     const nuevoId = await Servicio.find({}).count() + 1;
 
     const NuevoServicio = new Servicio ({
@@ -17,7 +17,8 @@ ServicioController.registrarServicio = async(servicio) => {
         estado,
         tipo: tipoLavado,
         costo: 25000,
-        observaciones
+        observaciones,
+        empleadoEncargado: ""
     });
 
   
@@ -94,10 +95,10 @@ ServicioController.listarPorPlaca = async(req, res) => {
 ServicioController.eliminar = async(req, res) => {
     const id = req.params.id;
 
-    const respuesta = await Servicio.deleteOne({ id: id });
+    const respuesta = await Servicio.deleteOne({ id : id });
 
     if(respuesta.deletedCount > 0) res.json({ mensaje: 'Servicio eliminado' });
-    else res.json({ mensaje: 'No se encontró el servicio' });
+    else res.json({ mensaje: 'No se encontró el servicio ' });
 };
 
 ServicioController.actualizar = async(req, res) => {
