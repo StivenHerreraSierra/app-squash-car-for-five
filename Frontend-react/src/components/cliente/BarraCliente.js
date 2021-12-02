@@ -6,6 +6,7 @@ import { BiExit  } from "react-icons/bi";
 import { BsHouseDoorFill, BsFillClockFill, BsCalendar2Fill } from "react-icons/bs";
 
 export default class header extends React.Component {
+
   render() {
     return (
       <Navbar expand="lg" bg="primary" variant="dark">
@@ -20,11 +21,11 @@ export default class header extends React.Component {
             </Nav>
             
             <Nav>
-            <Navbar.Brand id="icono-usuario" href="#home">
-            <ImUser size={25}/>
-            </Navbar.Brand>    
+              <Navbar.Brand id="icono-usuario" href="#home">
+                <ImUser size={25}/>
+              </Navbar.Brand>    
             
-            <NavDropdown title="nombre_usuario" id="collasible-nav-dropdown">
+              <NavDropdown title={sessionStorage.getItem('clienteNombre')} id="collasible-nav-dropdown">
                 <NavDropdown.Item href="#"> <BiExit/> Cerrar Seccion</NavDropdown.Item>
               </NavDropdown>
             </Nav>

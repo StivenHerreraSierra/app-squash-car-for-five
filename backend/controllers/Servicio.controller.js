@@ -5,7 +5,7 @@ const Vehiculo = require('../models/Vehiculo.model');
 const Servicio = require('../models/Servicio.model');
 
 ServicioController.registrarServicio = async(servicio) => {
-    const { idCliente, nombreCliente, placa, fecha, estado, tipoLavado, costo, observaciones } = servicio;
+    const { idCliente, nombreCliente, placa, fecha, estado, tipoLavado, observaciones } = servicio;
     const nuevoId = await Servicio.find({}).count() + 1;
 
     const NuevoServicio = new Servicio ({
@@ -17,7 +17,8 @@ ServicioController.registrarServicio = async(servicio) => {
         estado,
         tipo: tipoLavado,
         costo: 25000,
-        observaciones
+        observaciones,
+        empleadoEncargado: ""
     });
 
   
