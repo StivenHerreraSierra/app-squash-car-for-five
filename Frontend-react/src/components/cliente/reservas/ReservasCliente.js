@@ -5,8 +5,8 @@ import FormularioServicio from "./FormularioServicio";
 import "./reservaStyle.css";
 import { Container, Button, Modal } from "react-bootstrap";
 import Axios from "axios";
-import { APIHOST as host} from '../../../app.json'
-import Swal from 'sweetalert2';
+import { APIHOST as host } from "../../../app.json";
+import Swal from "sweetalert2";
 
 export default class Reservas extends React.Component {
   constructor(props) {
@@ -17,13 +17,13 @@ export default class Reservas extends React.Component {
         nombrecliente: "",
       },
       servicio: {
-        fecha: '',
+        fecha: "",
         placa: "",
         tipoVehiculo: "Automóvil",
         tipoLavado: "Convencional",
         observaciones: "",
       },
-      show: false
+      show: false,
     };
 
     this.onFechaChange = this.onFechaChange.bind(this);
@@ -44,9 +44,9 @@ export default class Reservas extends React.Component {
 
     this.setState({
       cliente: {
-        idCliente: sessionStorage.getItem('idCliente'),
-        nombreCliente: sessionStorage.getItem('nombreCliente')
-      }
+        idCliente: sessionStorage.getItem("idCliente"),
+        nombreCliente: sessionStorage.getItem("nombreCliente"),
+      },
     });
   }
 
@@ -119,34 +119,32 @@ export default class Reservas extends React.Component {
   }
 
   registrarServicio() {
-    Axios.post(`${host}/servicio/crear`,
-      {
-        cliente: this.state.cliente,
-        servicio: this.state.servicio
-      }
-    )
-    .then(response => {
-      console.log(response.data);
-      this.ocultarModalConfirmacion();
-
-      this.mostrarAlerta(
-        'info',
-        'Registro exitoso',
-        'La reserva fue registrada'
-      );
-      this.limpiarCampos();
+    Axios.post(`${host}/servicio/crear`, {
+      cliente: this.state.cliente,
+      servicio: this.state.servicio,
     })
-    .catch(err => {
-      console.error(err.message)
-      this.ocultarModalConfirmacion();
+      .then((response) => {
+        console.log(response.data);
+        this.ocultarModalConfirmacion();
 
-      this.mostrarAlerta(
-        'error',
-        'Registro incorrecto',
-        'Hubo un error durante el registro',
-        err.message
-      );
-    });
+        this.mostrarAlerta(
+          "info",
+          "Registro exitoso",
+          "La reserva fue registrada"
+        );
+        this.limpiarCampos();
+      })
+      .catch((err) => {
+        console.error(err.message);
+        this.ocultarModalConfirmacion();
+
+        this.mostrarAlerta(
+          "error",
+          "Registro incorrecto",
+          "Hubo un error durante el registro",
+          err.message
+        );
+      });
   }
 
   mostrarAlerta(icon, title, text, footer) {
@@ -154,18 +152,18 @@ export default class Reservas extends React.Component {
       icon: icon,
       title: title,
       text: text,
-      footer: footer
+      footer: footer,
     });
   }
 
   limpiarCampos() {
     this.setState({
       servicio: {
-        fecha: '',
-        placa: '',
-        tipoVehiculo: '',
-        tipoLavado: '',
-        observaciones: '',
+        fecha: "",
+        placa: "",
+        tipoVehiculo: "",
+        tipoLavado: "",
+        observaciones: "",
       },
     });
   }
@@ -205,7 +203,11 @@ export default class Reservas extends React.Component {
           ></FormularioServicio>
 
           <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-            <button className="btn btn-secondary" type="button" onClick={this.limpiarCampos}>
+            <button
+              className="btn btn-secondary"
+              type="button"
+              onClick={this.limpiarCampos}
+            >
               Limpiar
             </button>
 
@@ -217,7 +219,11 @@ export default class Reservas extends React.Component {
               Reservar
             </Button>
 
-            <Modal show={this.state.show} onHide={this.ocultarModalConfirmacion} centered>
+            <Modal
+              show={this.state.show}
+              onHide={this.ocultarModalConfirmacion}
+              centered
+            >
               <Modal.Header closeButton>
                 <Modal.Title>¿Desea confirmar la reserva?</Modal.Title>
               </Modal.Header>
@@ -228,7 +234,10 @@ export default class Reservas extends React.Component {
               </Modal.Body>
 
               <Modal.Footer>
-                <Button variant="secondary" onClick={this.ocultarModalConfirmacion}>
+                <Button
+                  variant="secondary"
+                  onClick={this.ocultarModalConfirmacion}
+                >
                   Cancelar
                 </Button>
                 <Button variant="primary" onClick={this.registrarServicio}>

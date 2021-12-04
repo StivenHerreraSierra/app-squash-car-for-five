@@ -31,6 +31,7 @@ export default class CrearCliente extends React.Component {
       .post("/cliente", this.state.cliente)
       .then((response) => {
         console.log(response.data);
+        alert("Se ha creado un nuevo cliente...");
       })
       .catch((err) => {
         console.error(err);
